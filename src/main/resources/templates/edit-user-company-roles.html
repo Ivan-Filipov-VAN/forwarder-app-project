@@ -1,0 +1,116 @@
+<body><!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container">
+    <h2 class="text-center text-white">Register User</h2>
+    <form
+            th:action="@{/users/editAddRoleCompany}"
+            th:method="post"
+            th:object="${user}"
+            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+
+        <input type="hidden" th:field="*{id}" />
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="email" class="text-white font-weight-bold">Email</label>
+                <input
+                        th:field="*{email}"
+                        id="email"
+                        name="username"
+                        type="text"
+                        class="form-control"
+                        placeholder="email"/>
+
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label for="phoneNumber" class="text-white font-weight-bold">phoneNumber</label>
+                <input
+                        th:field="*{phoneNumber}"
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        type="text"
+                        class="form-control"
+                        placeholder="phoneNumber"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="firstName" class="text-white font-weight-bold">First Name</label>
+                <input
+                        th:field="*{firstName}"
+                        id="firstName"
+                        name="firstName"
+                        type="text"
+                        class="form-control"
+                        placeholder="First name"/>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="lastName" class="text-white font-weight-bold">Last Name</label>
+                <input
+                        th:field="*{lastName}"
+                        id="lastName"
+                        name="lastName"
+                        type="text" class="form-control"
+                        placeholder="Last name"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12 mb-6">
+                <label for="idCompany" class="text-white font-weight-bold">Company</label>
+                <select
+                        th:field="*{idCompany}"
+                        id="idCompany"
+                        name="idCompany"
+                        class="custom-select"
+                        placeholder="idCompany">
+                    <option value="" selected>Company</option>
+                    <option th:each="c : ${companies}" th:value="${c.getId}" th:text="${c.getName}">Company</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <label class="col-md-4 mb-2 text-white font-weight-bold">ROLES:</label>
+            </div>
+            <div class="col-md-8 mb-4 text-white font-weight-bold">
+                <th:block th:each="role: ${roles}">
+                    <input type="checkbox" th:field="*{userRoles}"
+                           th:text="${role.userRole}" th:value="${role.id}" class="m-2"/>
+                </th:block>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="row">
+                <div class="col col-md-4">
+                    <div class="button-holder d-flex">
+                        <input type="submit" class="btn btn-info btn-lg" value="Add Roles and Company"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <footer></footer>
+</div>
+
+</body>
+</html>
+
+
+</body>
+</html>

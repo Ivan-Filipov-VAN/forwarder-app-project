@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html">
+
+<head th:replace="fragments/head::head"></head>
+
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container">
+    <h2 class="text-center text-white">Add Company</h2>
+    <form
+            th:action="@{/deals/add-deal}"
+            th:method="post"
+            th:object="${dealAddDto}"
+            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+
+        <div class="row">
+            <div class="form-group col-md-4 mb-2">
+                <label for="type" class="text-white font-weight-bold">Type</label>
+                <select
+                        th:field="*{type}"
+                        th:errorclass="is-invalid"
+                        id="type"
+                        name="type"
+                        type="text"
+                        class="form-control"
+                        placeholder="name">
+                    <option value="" selected>Select Type</option>
+                    <option th:each="t : ${T(com.softuni.forwardingApp.models.enums.AirTypeEnum).values()}"
+                            th:value="${t}" th:text="${t.name()}">Deal
+                    </option>
+                </select>
+                <small class="invalid-feedback errors alert alert-danger">
+                    Type Error.
+                </small>
+            </div>
+            <div class="form-group col-md-4 mb-2">
+                <label for="mawb" class="text-white font-weight-bold">MAWB</label>
+                <input
+                        th:field="*{mawb}"
+                        id="mawb"
+                        name="mawb"
+                        type="text"
+                        class="form-control"
+                        placeholder="mawb"/>
+            </div>
+            <div class="form-group col-md-4 mb-2">
+                <label for="hawb" class="text-white font-weight-bold">HAWB</label>
+                <input
+                        th:field="*{hawb}"
+                        id="hawb"
+                        name="hawb"
+                        type="text"
+                        class="form-control"
+                        placeholder="hawb"/>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4 mb-2">
+                <label for="pieces" class="text-white font-weight-bold">Pieces</label>
+                <input
+                        th:field="*{pieces}"
+                        id="pieces"
+                        name="pieces"
+                        type="text"
+                        class="form-control"
+                        placeholder="pieces"/>
+            </div>
+            <div class="form-group col-md-4 mb-2">
+                <label for="actualWeight" class="text-white font-weight-bold">Actual Weight</label>
+                <input
+                        th:field="*{actualWeight}"
+                        id="actualWeight"
+                        name="actualWeight"
+                        type="text"
+                        class="form-control"
+                        placeholder="actualWeight"/>
+
+            </div>
+            <div class="form-group col-md-4 mb-2">
+                <label for="chargeableWeight" class="text-white font-weight-bold">Chargeable Weight</label>
+                <input
+                        th:field="*{chargeableWeight}"
+                        id="chargeableWeight"
+                        name="chargeableWeight"
+                        type="text"
+                        class="form-control"
+                        placeholder="chargeableWeight"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="idCompany" class="text-white font-weight-bold">Company</label>
+                <select
+                        th:field="*{idCompany}"
+                        id="idCompany"
+                        name="idCompany"
+                        class="form-control"
+                        placeholder="idCompany">
+                <option value="" selected>Select Company</option>
+                <option th:each="c : ${companies}" th:value="${c.getId}" th:text="${c.getName}">Customer</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="idAgent" class="text-white font-weight-bold">Agent</label>
+                <select
+                        th:field="*{idAgent}"
+                        id="idAgent"
+                        name="idAgent"
+                        class="form-control"
+                        placeholder="idAgent">
+                <option value="" selected>Select Agent</option>
+                <option th:each="a : ${agents}" th:value="${a.getId}" th:text="${a.getName}">Agents</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="country" class="text-white font-weight-bold">Country</label>
+                <input
+                        th:field="*{country}"
+                        id="country"
+                        name="country"
+                        type="text"
+                        class="form-control"
+                        placeholder="country"/>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="airport" class="text-white font-weight-bold">Airport</label>
+                <input
+                        th:field="*{airport}"
+                        id="airport"
+                        name="airport"
+                        type="text"
+                        class="form-control"
+                        placeholder="airport"/>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-info btn-lg" value="Create deal"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <footer></footer>
+</div>
+
+</body>
+</html>

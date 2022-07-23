@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container">
+    <h2 class="text-center text-white">Add Company</h2>
+    <form
+            th:action="@{/agents/save}"
+            th:method="post"
+            th:object="${agent}"
+            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+
+        <input type="hidden" th:field="*{id}" />
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="name" class="text-white font-weight-bold">Name</label>
+                <input
+                        th:field="*{name}"
+                        th:errorclass="is-invalid"
+                        id="name"
+                        name="name"
+                        type="text"
+                        class="form-control"
+                        placeholder="name"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Name Error.
+                </p>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label for="vat" class="text-white font-weight-bold">VAT</label>
+                <input
+                        th:field="*{vat}"
+                        id="vat"
+                        name="vat"
+                        type="text"
+                        class="form-control"
+                        placeholder="vat"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="country" class="text-white font-weight-bold">Country</label>
+                <input
+                        th:field="*{country}"
+                        th:errorclass="is-invalid"
+                        id="country"
+                        name="country"
+                        type="text"
+                        class="form-control"
+                        placeholder="country"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Country Error.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="town" class="text-white font-weight-bold">Town</label>
+                <input
+                        th:field="*{town}"
+                        id="town"
+                        name="town"
+                        type="text"
+                        class="form-control"
+                        placeholder="town"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12 mb-12">
+                <label for="address" class="text-white font-weight-bold">Address</label>
+                <input
+                        th:field="*{address}"
+                        id="address"
+                        name="address"
+                        type="text"
+                        class="form-control"
+                        placeholder="address"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-info btn-lg" value="Update"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <footer></footer>
+</div>
+
+</body>
+</html>

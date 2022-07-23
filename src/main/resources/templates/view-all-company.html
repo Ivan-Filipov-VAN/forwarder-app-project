@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container">
+    <h2 class="text-center text-white">All Companies</h2>
+</div>
+
+<!--<div class="container">-->
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr class="table-primary">
+            <th>ID</th>
+            <th>Name</th>
+            <th>VAT</th>
+            <th>Address</th>
+            <th>MOL</th>
+            <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c: ${allCompanies}">
+            <td th:text="${c.id}">User ID</td>
+            <td th:text="${c.name}">Name</td>
+            <td th:text="${c.vat}">VAT</td>
+            <td th:text="${c.address}">Address</td>
+            <td th:text="${c.accountablePerson}">Person</td>
+            <td><a th:href="@{'/companies/edit/' + ${c.id}}">Edit</a></td>
+        </tr>
+        </tbody>
+    </table>
+<!--</div>-->
+
+<div>
+    <footer></footer>
+</div>
+
+</body>
+</html>
