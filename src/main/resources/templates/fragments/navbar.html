@@ -118,10 +118,23 @@
                         </a>
                     </li>
 
-                    <li class="nav-item" sec:authorize="hasRole('CUSTOMER')">
-                        <a th:href="@{/deals/customer-deals}" class="nav-link">
+                    <li class="nav-item dropdown" sec:authorize="hasRole('CUSTOMER')">
+                        <a href="#" class="nav-link dropdown-toggle"
+                           id="navbarDropdownCustomerDeals"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
                             Deals
                         </a>
+                        <ul class="dropdown-menu"
+                            aria-labelledby="navbarDropdown">
+                            <li sec:authorize="hasRole('CUSTOMER')">
+                                <a th:href="@{/deals/customer-deals}"
+                                   class="dropdown-item">Deals</a></li>
+                            <li sec:authorize="hasRole('CUSTOMER')">
+                                <a th:href="@{/deals/customer-all-deals}"
+                                   class="dropdown-item">All Deals</a></li>
+                        </ul>
                     </li>
 
                     <li class="nav-item d-flex" sec:authorize="isAuthenticated()">

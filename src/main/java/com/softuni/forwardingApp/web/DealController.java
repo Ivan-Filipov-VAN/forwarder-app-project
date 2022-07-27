@@ -145,26 +145,87 @@ public class DealController {
         return "redirect:all-deals";
     }
 
-    @GetMapping("/customer-deals")
+
+
+//    private String viewAllDeals(Model model,
+//                                @PageableDefault(
+//                                        page = 0,
+//                                        size = 3
+//                                ) Pageable pageable) {
+//
+//        Page<DealViewModel> allDeals = dealService.
+//                findAllDealsViewModel(pageable);
+//
+//        model.addAttribute("allDeals", allDeals);
+//        return "view-all-deals";
+
+        @GetMapping("/customer-deals")
     private String viewCustomerDeals(
             Model model,
+            @PageableDefault(
+                    page = 0,
+                    size = 3
+            )
+            Pageable pageable,
             @AuthenticationPrincipal CurrentUserDetails userDetails) {
-
         UserEntity user = userService.findById(userDetails.getId());
         if (user.getCompany() == null) {
             return "error-user-company-not-exist";
         }
         Long companyId = user.getCompany().getId();
 
-//        List<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(companyId);
-
-        List<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(companyId);
-
+        Page<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(pageable, companyId);
 
         model.addAttribute("customerDeals", customerDeals);
 
         return "view-customer-deals";
     }
+
+    @GetMapping("/customer-all-deals")
+    private String viewAllCustomerDeals(
+            Model model,
+            @PageableDefault(
+                    page = 0,
+                    size = 10
+            )
+            Pageable pageable,
+            @AuthenticationPrincipal CurrentUserDetails userDetails) {
+        UserEntity user = userService.findById(userDetails.getId());
+        if (user.getCompany() == null) {
+            return "error-user-company-not-exist";
+        }
+        Long companyId = user.getCompany().getId();
+
+        Page<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(pageable, companyId);
+
+        model.addAttribute("customerDeals", customerDeals);
+
+        return "view-customer-all-deals";
+    }
+
+
+//    before changes
+
+//    @GetMapping("/customer-deals")
+//    private String viewCustomerDeals(
+//            Model model,
+//            @AuthenticationPrincipal CurrentUserDetails userDetails) {
+//
+//        UserEntity user = userService.findById(userDetails.getId());
+//        if (user.getCompany() == null) {
+//            return "error-user-company-not-exist";
+//        }
+//        Long companyId = user.getCompany().getId();
+//
+////        List<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(companyId);
+//
+//        List<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(companyId);
+//
+//
+//        model.addAttribute("customerDeals", customerDeals);
+//
+//        return "view-customer-deals";
+//    }
 
     @ModelAttribute
     public DealAddDto dealAddDto() {

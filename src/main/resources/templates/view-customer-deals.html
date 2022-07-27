@@ -13,45 +13,64 @@
 </div>
 
 <!--<div class="container">-->
-<table class="table table-striped">
-    <thead>
-    <tr class="table-primary">
-<!--        <th>ID</th>-->
-        <th>TYPE</th>
-        <th>Date</th>
-        <th>MAWB</th>
-        <th>HAWB</th>
-        <th>Company</th>
-<!--        <th>Agent</th>-->
-<!--        <th>Employee</th>-->
-        <th>PCS</th>
-        <th>Act. Weight</th>
-        <th>Vol. Weight</th>
-        <th>Country</th>
-        <th>Airport</th>
-<!--        <th>EDIT</th>-->
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="d: ${customerDeals}">
-<!--        <td th:text="${d.id}">ID</td>-->
-        <td th:text="${d.type}">type</td>
-        <td th:text="${d.date}">date</td>
-        <td th:text="${d.mawb}">mawb</td>
-        <td th:text="${d.hawb}">hawb</td>
-        <td th:text="${d.company}">company</td>
-<!--        <td th:text="${d.agent}">agent</td>-->
-<!--        <td th:text="${d.employee}">employee</td>-->
-        <td th:text="${d.pieces}">pieces</td>
-        <td th:text="${d.actualWeight}">pieces</td>
-        <td th:text="${d.chargeableWeight}">pieces</td>
-        <td th:text="${d.country}">pieces</td>
-        <td th:text="${d.airport}">pieces</td>
-<!--        <td><a th:href="@{'/deals/edit/' + ${d.id}}">Edit</a></td>-->
-    </tr>
-    </tbody>
-</table>
+<div class="container text-center py-1">
+    <div class="row row-cols-1 row-cols-md-3">
+        <div class="col mb-4" th:each="d: ${customerDeals.getContent()}">
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h4 th:text="|MAWB: ${d.mawb}|">MAWB</h4>
+                    <h4 th:text="|HAWB: ${d.hawb}|">HAWB</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="my-0 font-weight-normal">AIR SERVICE
+                        <!--                        <small class="text-muted">/mo</small>-->
+                    </h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li th:text="|Type: ${d.type}|">Type</li>
+                        <li th:text="|Date: ${d.date}|">date</li>
+                        <li th:text="|Country: ${d.country}|">country</li>
+                        <li th:text="|Airport: ${d.airport}|">airport</li>
+                        <li th:text="|Pieces: ${d.pieces}|">pieces</li>
+                        <li th:text="|Weight: ${d.actualWeight} kg.|">Actual Weight</li>
+                        <li th:text="|Chargeable: ${d.chargeableWeight} kg.|">Chargeable Weight</li>
+                        <li th:text="|Company: ${d.company}|">company</li>
+                    </ul>
+                    <div class="d-grid gap-2">
+                        <a class="btn
+                            btn-outline-primary btn-lg shadow-sm"
+                           th:href="@{/}" href="#"
+                        >Home Page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 <!--</div>-->
+
+<div class="container p-2 text-center">
+    <div class="btn-group" role="group" aria-label="Basic example">
+
+        <a class="btn btn-secondary"
+           th:classappend="${customerDeals.isFirst() ? 'disabled' : ''}"
+           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=0)}" href="#">First</a>
+
+        <a class="btn btn-secondary"
+           th:classappend="${customerDeals.hasPrevious() ? '' : 'disabled'}"
+           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=${customerDeals.getNumber() - 1})}" href="#">Previous</a>
+
+        <a class="btn btn-secondary"
+           th:classappend="${customerDeals.hasNext() ? '' : 'disabled'}"
+           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=${customerDeals.getNumber() + 1})}" href="#">Next</a>
+
+        <a class="btn btn-secondary"
+           th:classappend="${customerDeals.isLast() ? 'disabled' : ''}"
+           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=${customerDeals.getTotalPages() - 1})}" href="#">Last</a>
+
+    </div>
+</div>
 
 <div>
     <footer th:replace="fragments/footer::footer"></footer>

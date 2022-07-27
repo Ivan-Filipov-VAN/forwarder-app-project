@@ -45,7 +45,7 @@ public class SecurityConfig {
                         antMatchers("/deals/all-deals").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/update").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/edit/{id}").hasRole(UserRoleEnum.EMPLOYEE.name()).
-                        antMatchers("/deals/customer-deals").hasRole(UserRoleEnum.CUSTOMER.name()).
+                        antMatchers("/deals/customer-deals", "/deals/customer-all-deals").hasRole(UserRoleEnum.CUSTOMER.name()).
                 // all other pages are available for logger in users
                         anyRequest().
                 authenticated().

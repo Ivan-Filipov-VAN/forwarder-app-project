@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container padding-90">
+    <h2 class="text-center text-white">All Companies</h2>
+</div>
+
+<!--<div class="container">-->
+<table class="table table-striped">
+    <thead>
+    <tr class="table-primary">
+        <!--        <th>ID</th>-->
+        <th>TYPE</th>
+        <th>Date</th>
+        <th>MAWB</th>
+        <th>HAWB</th>
+        <th>Company</th>
+        <!--        <th>Agent</th>-->
+        <!--        <th>Employee</th>-->
+        <th>PCS</th>
+        <th>Act. Weight</th>
+        <th>Vol. Weight</th>
+        <th>Country</th>
+        <th>Airport</th>
+        <!--        <th>EDIT</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="d: ${customerDeals.getContent()}">
+        <!--        <td th:text="${d.id}">ID</td>-->
+        <td th:text="${d.type}">type</td>
+        <td th:text="${d.date}">date</td>
+        <td th:text="${d.mawb}">mawb</td>
+        <td th:text="${d.hawb}">hawb</td>
+        <td th:text="${d.company}">company</td>
+        <!--        <td th:text="${d.agent}">agent</td>-->
+        <!--        <td th:text="${d.employee}">employee</td>-->
+        <td th:text="${d.pieces}">pieces</td>
+        <td th:text="${d.actualWeight}">pieces</td>
+        <td th:text="${d.chargeableWeight}">pieces</td>
+        <td th:text="${d.country}">pieces</td>
+        <td th:text="${d.airport}">pieces</td>
+        <!--        <td><a th:href="@{'/deals/edit/' + ${d.id}}">Edit</a></td>-->
+    </tr>
+    </tbody>
+</table>
+<!--</div>-->
+<div class="container p-2 text-center">
+    <div class="btn-group" role="group" aria-label="Basic example">
+
+        <a class="btn btn-secondary"
+           th:classappend="${customerDeals.isFirst() ? 'disabled' : ''}"
+           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=0)}" href="#">First</a>
+
+        <a class="btn btn-secondary"
+           th:classappend="${customerDeals.hasPrevious() ? '' : 'disabled'}"
+           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=${customerDeals.getNumber() - 1})}" href="#">Previous</a>
+
+        <a class="btn btn-secondary"
+           th:classappend="${customerDeals.hasNext() ? '' : 'disabled'}"
+           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=${customerDeals.getNumber() + 1})}" href="#">Next</a>
+
+        <a class="btn btn-secondary"
+           th:classappend="${customerDeals.isLast() ? 'disabled' : ''}"
+           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=${customerDeals.getTotalPages() - 1})}" href="#">Last</a>
+
+    </div>
+</div>
+
+<div>
+    <footer th:replace="fragments/footer::footer"></footer>
+</div>
+
+</body>
+</html>

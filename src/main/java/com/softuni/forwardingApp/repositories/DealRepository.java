@@ -1,7 +1,8 @@
 package com.softuni.forwardingApp.repositories;
 
 import com.softuni.forwardingApp.models.entity.DealEntity;
-import com.softuni.forwardingApp.models.view.DealViewModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -32,5 +33,5 @@ public interface DealRepository extends JpaRepository<DealEntity, Long> {
 //    List<DealViewModel> findAllDealsViewModelByCompanyID(Long id);
 
     @Query("SELECT d FROM DealEntity d JOIN d.company c WHERE c.id = ?1")
-    List<DealEntity> findByEmployeeId(Long id);
+    Page<DealEntity> findByEmployeeId(Pageable pageable, Long id);
 }

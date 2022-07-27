@@ -93,15 +93,11 @@ public class DealService {
 
     }
 
-//    public List<DealViewModel> findAllDealsViewModelByCompanyID(Long id) {
-//        return dealRepository.findAllDealsViewModelByCompanyID(id);
-//    }
-
-    public List<DealViewModel> findAllDealsViewModelByCompanyID(Long id) {
-        List<DealEntity> dealEntities = dealRepository.findByEmployeeId(id);
-        return dealEntities
-                .stream()
-                .map(d -> {
+    public Page<DealViewModel> findAllDealsViewModelByCompanyID(Pageable pageable, Long id) {
+//        List<DealEntity> dealEntities = dealRepository.findByEmployeeId(id);
+        return dealRepository.findByEmployeeId(pageable, id)
+//                .stream()
+                    .map(d -> {
                     DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
                     dealViewModel.setCompany(d.getCompany().getName());
 //                    dealViewModel.setEmployee(d.getEmployee().getCompName());
@@ -111,7 +107,25 @@ public class DealService {
 //                        dealViewModel.setAgent(null);
 //                    }
                     return dealViewModel;
-                })
-                .collect(Collectors.toList());
+                });
+//                .collect(Collectors.toList());
     }
+                //BEFORE CHANGES
+//    public List<DealViewModel> findAllDealsViewModelByCompanyID(Long id) {
+////        List<DealEntity> dealEntities = dealRepository.findByEmployeeId(id);
+//        return dealRepository.findByEmployeeId(id)
+//                .stream()
+//                .map(d -> {
+//                    DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
+//                    dealViewModel.setCompany(d.getCompany().getName());
+////                    dealViewModel.setEmployee(d.getEmployee().getCompName());
+////                    if (d.getAgent() != null ) {
+////                        dealViewModel.setAgent(d.getAgent().getName());
+////                    } else {
+////                        dealViewModel.setAgent(null);
+////                    }
+//                    return dealViewModel;
+//                })
+//                .collect(Collectors.toList());
+//    }
 }
