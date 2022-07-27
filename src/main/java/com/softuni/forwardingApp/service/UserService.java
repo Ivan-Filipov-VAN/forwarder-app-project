@@ -81,6 +81,8 @@ public class UserService {
                 .setCompVAT("69696969");
 
         userRepository.save(admin);
+
+
     }
 
     public List<UserEntity> findAllNewUsers() {
@@ -99,6 +101,8 @@ public class UserService {
         UserEntity userSetRolesCompany = userRepository.findById(user.getId()).orElse(null);
         if (user.getIdCompany() != null) {
             userSetRolesCompany.setCompany(companyService.findById(user.getIdCompany()));
+        } else {
+            userSetRolesCompany.setCompany(null);
         }
         userSetRolesCompany.setUserRoles(user.getUserRoles());
         userRepository.save(userSetRolesCompany);

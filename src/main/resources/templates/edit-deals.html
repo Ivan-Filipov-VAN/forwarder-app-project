@@ -10,7 +10,7 @@
 
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<div class="container">
+<div class="container padding-90">
     <h2 class="text-center text-white">Add Company</h2>
     <form
             th:action="@{/deals/update}"
@@ -103,6 +103,7 @@
                 <label for="company" class="text-white font-weight-bold">Company</label>
                 <select
                         th:field="*{company}"
+                        th:errorclass="is-invalid"
                         id="company"
                         name="company"
                         class="form-control"
@@ -110,6 +111,9 @@
                     <option value="" selected>Select Company</option>
                     <option th:each="c : ${companies}" th:value="${c.getId}" th:text="${c.getName}">Customer</option>
                 </select>
+                <small class="invalid-feedback errors alert alert-danger">
+                    Company is required !
+                </small>
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label for="agent" class="text-white font-weight-bold">Agent</label>
@@ -152,7 +156,7 @@
         <div class="row">
             <div class="col col-md-4">
                 <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Create deal"/>
+                    <input type="submit" class="btn btn-info btn-lg" value="Update deal"/>
                 </div>
             </div>
         </div>
@@ -160,7 +164,7 @@
 </div>
 
 <div>
-    <footer></footer>
+    <footer th:replace="fragments/footer::footer"></footer>
 </div>
 
 </body>

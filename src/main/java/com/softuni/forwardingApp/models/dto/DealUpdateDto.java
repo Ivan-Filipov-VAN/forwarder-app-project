@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class DealUpdateDto {
@@ -53,7 +54,8 @@ public class DealUpdateDto {
         return hawb;
     }
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     public CompanyEntity getCompany() {
         return company;
     }

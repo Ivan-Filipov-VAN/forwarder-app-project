@@ -9,7 +9,7 @@
 
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<div class="container">
+<div class="container padding-90">
     <h2 class="text-center text-white">Register User</h2>
     <form
             th:action="@{/users/editAddRoleCompany}"
@@ -66,13 +66,13 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-12 mb-6">
+            <div class="form-group col-md-6 mb-3">
                 <label for="idCompany" class="text-white font-weight-bold">Company</label>
                 <select
                         th:field="*{idCompany}"
                         id="idCompany"
                         name="idCompany"
-                        class="custom-select"
+                        class="form-control"
                         placeholder="idCompany">
                     <option value="" selected>Company</option>
                     <option th:each="c : ${companies}" th:value="${c.getId}" th:text="${c.getName}">Company</option>
@@ -105,7 +105,7 @@
 </div>
 
 <div>
-    <footer></footer>
+    <footer th:replace="fragments/footer::footer"></footer>
 </div>
 
 </body>

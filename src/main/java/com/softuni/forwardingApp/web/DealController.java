@@ -1,15 +1,20 @@
 package com.softuni.forwardingApp.web;
 
-import com.softuni.forwardingApp.models.dto.CompanyUpdateDto;
 import com.softuni.forwardingApp.models.dto.DealAddDto;
 import com.softuni.forwardingApp.models.dto.DealUpdateDto;
 import com.softuni.forwardingApp.models.entity.CompanyEntity;
+import com.softuni.forwardingApp.models.entity.DealEntity;
+import com.softuni.forwardingApp.models.entity.UserEntity;
 import com.softuni.forwardingApp.models.user.CurrentUserDetails;
 import com.softuni.forwardingApp.models.view.AgentViewIdName;
 import com.softuni.forwardingApp.models.view.DealViewModel;
 import com.softuni.forwardingApp.service.AgentService;
 import com.softuni.forwardingApp.service.CompanyService;
 import com.softuni.forwardingApp.service.DealService;
+import com.softuni.forwardingApp.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +33,17 @@ public class DealController {
     private final AgentService agentService;
     private final DealService dealService;
 
-    public DealController(CompanyService companyService, AgentService agentService, DealService dealService) {
+    private final UserService userService;
+
+    public DealController(CompanyService companyService, AgentService agentService, DealService dealService, UserService userService) {
         this.companyService = companyService;
         this.agentService = agentService;
         this.dealService = dealService;
+        this.userService = userService;
     }
 
     @GetMapping("/add-deal")
-    public String addDeal(Model model){
+    public String addDeal(Model model) {
 
         List<CompanyEntity> companies = companyService.findAll();
         List<AgentViewIdName> agents = agentService.findAllAgentsByIdName();
@@ -67,11 +75,27 @@ public class DealController {
 
     }
 
-    @GetMapping("/all-deals")
-    private String viewAllDeals(Model model) {
 
-        List<DealViewModel> allDeals = dealService.
-                findAllDealsViewModel();
+//    //TODO
+//    @GetMapping("/all-deals")
+//    private String viewAllDeals(Model model) {
+//
+//        List<DealViewModel> allDeals = dealService.
+//                findAllDealsViewModel();
+//
+//        model.addAttribute("allDeals", allDeals);
+//        return "view-all-deals";
+//    }
+
+    @GetMapping("/all-deals")
+    private String viewAllDeals(Model model,
+                                @PageableDefault(
+                                        page = 0,
+                                        size = 3
+                                ) Pageable pageable) {
+
+        Page<DealViewModel> allDeals = dealService.
+                findAllDealsViewModel(pageable);
 
         model.addAttribute("allDeals", allDeals);
         return "view-all-deals";
@@ -92,7 +116,14 @@ public class DealController {
     }
 
     @GetMapping("/update")
-    public String confirmUpdateDeal() {
+    public String confirmUpdateDeal(Model model) {
+
+        List<CompanyEntity> companies = companyService.findAll();
+        List<AgentViewIdName> agents = agentService.findAllAgentsByIdName();
+
+        model.addAttribute("companies", companies);
+        model.addAttribute("agents", agents);
+
         return "edit-deals";
     }
 
@@ -112,6 +143,27 @@ public class DealController {
         dealService.updateDeal(dealUpdateDto);
 
         return "redirect:all-deals";
+    }
+
+    @GetMapping("/customer-deals")
+    private String viewCustomerDeals(
+            Model model,
+            @AuthenticationPrincipal CurrentUserDetails userDetails) {
+
+        UserEntity user = userService.findById(userDetails.getId());
+        if (user.getCompany() == null) {
+            return "error-user-company-not-exist";
+        }
+        Long companyId = user.getCompany().getId();
+
+//        List<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(companyId);
+
+        List<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(companyId);
+
+
+        model.addAttribute("customerDeals", customerDeals);
+
+        return "view-customer-deals";
     }
 
     @ModelAttribute

@@ -10,7 +10,7 @@
 
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<div class="container">
+<div class="container padding-90">
     <h2 class="text-center text-white">Add Company</h2>
     <form
             th:action="@{/deals/add-deal}"
@@ -100,6 +100,7 @@
                 <label for="idCompany" class="text-white font-weight-bold">Company</label>
                 <select
                         th:field="*{idCompany}"
+                        th:errorclass="is-invalid"
                         id="idCompany"
                         name="idCompany"
                         class="form-control"
@@ -107,6 +108,9 @@
                 <option value="" selected>Select Company</option>
                 <option th:each="c : ${companies}" th:value="${c.getId}" th:text="${c.getName}">Customer</option>
                 </select>
+                <small class="invalid-feedback errors alert alert-danger">
+                    Company is required !
+                </small>
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label for="idAgent" class="text-white font-weight-bold">Agent</label>
@@ -116,8 +120,8 @@
                         name="idAgent"
                         class="form-control"
                         placeholder="idAgent">
-                <option value="" selected>Select Agent</option>
-                <option th:each="a : ${agents}" th:value="${a.getId}" th:text="${a.getName}">Agents</option>
+                    <option value="" selected>Select Agent</option>
+                    <option th:each="a : ${agents}" th:value="${a.getId}" th:text="${a.getName}">Agents</option>
                 </select>
             </div>
         </div>
@@ -157,7 +161,7 @@
 </div>
 
 <div>
-    <footer></footer>
+    <footer th:replace="fragments/footer::footer"></footer>
 </div>
 
 </body>

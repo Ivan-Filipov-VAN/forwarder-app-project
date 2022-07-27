@@ -8,14 +8,14 @@
 
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<div class="container">
+<div class="container padding-90">
     <h2 class="text-center text-white">All Agents</h2>
 </div>
 
 <table class="table table-hover table-dark">
     <thead>
     <tr class="table-primary">
-        <th>ID</th>
+        <th>#</th>
         <th>Name</th>
         <th>VAT</th>
         <th>Country</th>
@@ -26,7 +26,7 @@
     </thead>
     <tbody>
     <tr th:each="a: ${allAgents}">
-        <td th:text="${a.id}">User ID</td>
+        <td text="#">#</td>
         <td th:text="${a.name}">Name</td>
         <td th:text="${a.vat}">VAT</td>
         <td th:text="${a.country}">VAT</td>
@@ -39,7 +39,7 @@
 
 
 <div>
-    <footer></footer>
+    <footer th:replace="fragments/footer::footer"></footer>
 </div>
 
 </body>

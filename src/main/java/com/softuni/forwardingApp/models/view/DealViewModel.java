@@ -102,4 +102,19 @@ public class DealViewModel {
     public String getAirport() {
         return airport;
     }
+
+    public DealViewModel setCompany(String company) {
+        this.company = company;
+        return this;
+    }
+
+    public DealViewModel setAgent(String agent) {
+        this.agent = agent;
+        return this;
+    }
+
+    public DealViewModel setEmployee(String employee) {
+        this.employee = employee;
+        return this;
+    }
 }

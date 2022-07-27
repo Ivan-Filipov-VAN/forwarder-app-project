@@ -3,6 +3,7 @@ package com.softuni.forwardingApp.models.mapper;
 import com.softuni.forwardingApp.models.dto.DealAddDto;
 import com.softuni.forwardingApp.models.dto.DealUpdateDto;
 import com.softuni.forwardingApp.models.entity.DealEntity;
+import com.softuni.forwardingApp.models.view.DealViewModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,5 +18,10 @@ public interface DealMapper {
     DealUpdateDto dealEntityToDealUpdateDto(DealEntity dealEntity);
 
     DealEntity dealEntityToDealUpdateDto(DealUpdateDto dealUpdateDto);
+
+    @Mapping(target = "company", ignore = true)
+    @Mapping(target = "employee", ignore = true)
+    @Mapping(target = "agent", ignore = true)
+    DealViewModel dealEntityToDealViewModel(DealEntity dealEntity);
 
 }

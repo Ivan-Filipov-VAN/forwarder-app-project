@@ -79,12 +79,109 @@
     </a>
 </div>
 </div>
+
+<!--<div class="container text-center py-5">-->
+<!--    <h1 class="display-4">Pricing</h1>-->
+<!--    <p class="lead">Some custom text</p>-->
+<!--</div>-->
+
+<div class="container text-center py-5">
+    <div class="row row-cols-1 row-cols-md-3">
+        <div class="col mb-4">
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h4>5Ex Company</h4>
+
+                </div>
+                <div class="card-body">
+
+
+                    <h1 class="my-0 font-weight-normal">AIR SERVICE
+<!--                        <small class="text-muted">/mo</small>-->
+                    </h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Import</li>
+                        <li>Export</li>
+                        <li>Customs Brokerage</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <div class="d-grid gap-2">
+                        <a class="btn
+                            btn-outline-primary btn-lg shadow-sm"
+                                th:href="@{/users/register}" href="#"
+                        >Sign up</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col mb-4">
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h4>Pro</h4>
+
+                </div>
+                <div class="card-body">
+
+
+                    <h1 class="my-0 font-weight-normal">$15
+                        <small class="text-muted">/mo</small>
+                    </h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>50 users included</li>
+                        <li>5 GB of storage</li>
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <div class="d-grid gap-2">
+                        <button class="btn
+                        btn-primary btn-lg shadow-sm"
+                        >Sign up</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col mb-4">
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h4>Business</h4>
+
+                </div>
+                <div class="card-body">
+
+
+                    <h1 class="my-0 font-weight-normal">$55
+                        <small class="text-muted">/mo</small>
+                    </h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>90 users included</li>
+                        <li>20 GB of storage</li>
+                        <li>Email support</li>
+                        <li>Help center access</li>
+                    </ul>
+                    <div class="d-grid gap-2">
+                        <button class="btn
+                            btn-primary btn-lg shadow-sm"
+                        >Sign up</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
 <!--<script src="/css/bootstrap.bundle.min.js"-->
 <!--        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"-->
 <!--        crossorigin="anonymous"></script>-->
 
 <div>
-    <footer></footer>
+    <footer th:replace="fragments/footer::footer"></footer>
 </div>
 </body>
 </html>

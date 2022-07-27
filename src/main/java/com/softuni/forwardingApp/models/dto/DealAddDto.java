@@ -58,6 +58,7 @@ public class DealAddDto {
         return this;
     }
 
+    @NotNull
     public Long getIdCompany() {
         return idCompany;
     }

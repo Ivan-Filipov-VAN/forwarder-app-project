@@ -23,6 +23,28 @@ public class AgentService {
         this.modelMapper = modelMapper;
     }
 
+    public void initAgent() {
+        if (agentRepository.count() > 0) {
+            return;
+        }
+        AgentEntity firstAgent = new AgentEntity()
+                .setName("Taiwan Fast")
+                .setCountry("Taiwan");
+
+        AgentEntity secondAgent = new AgentEntity()
+                .setName("China Pro")
+                .setCountry("China");
+
+        AgentEntity thirdAgent = new AgentEntity()
+                .setName("Korea Freight")
+                .setCountry("Korea");
+
+        agentRepository.save(firstAgent);
+        agentRepository.save(secondAgent);
+        agentRepository.save(thirdAgent);
+    }
+
+
     public void addAgent(AgentAddDto agentAddDto) {
         agentRepository.save(modelMapper.map(agentAddDto, AgentEntity.class));
     }
@@ -49,4 +71,8 @@ public class AgentService {
     public AgentEntity findById(Long id) {
         return agentRepository.findById(id).orElse(null);
     }
+
+
+
+
 }
