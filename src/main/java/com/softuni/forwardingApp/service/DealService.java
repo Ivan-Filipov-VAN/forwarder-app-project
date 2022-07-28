@@ -3,6 +3,7 @@ package com.softuni.forwardingApp.service;
 import com.softuni.forwardingApp.models.dto.DealAddDto;
 import com.softuni.forwardingApp.models.dto.DealUpdateDto;
 import com.softuni.forwardingApp.models.entity.DealEntity;
+import com.softuni.forwardingApp.models.enums.ShipmentStatusEnum;
 import com.softuni.forwardingApp.models.mapper.DealMapper;
 import com.softuni.forwardingApp.models.view.DealViewModel;
 import com.softuni.forwardingApp.repositories.DealRepository;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class DealService {
+
+    private static final ShipmentStatusEnum DELIVERED_STATUS = ShipmentStatusEnum.DONE;
 
     private final DealRepository dealRepository;
 
@@ -41,6 +44,7 @@ public class DealService {
         }
         dealEntity.setCompany(companyService.findById(dealAddDto.getIdCompany()));
         dealEntity.setEmployee(userService.findById(dealAddDto.getIdEmployee()));
+        dealEntity.setStatus(ShipmentStatusEnum.SHIPPER_CONTACTED);
 
         dealRepository.save(dealEntity);
     }
@@ -81,36 +85,71 @@ public class DealService {
                     }
                     return dealViewModel;
                 });
-
     }
 
+    public Page<DealViewModel> findAllDealsViewModelInTransit(Pageable pageable) {
+
+        return dealRepository.findAllDealsInTransit(pageable, DELIVERED_STATUS)
+                .map(d -> {
+                    DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
+                    dealViewModel.setCompany(d.getCompany().getName());
+                    dealViewModel.setEmployee(d.getEmployee().getEmail());
+                    if (d.getAgent() != null) {
+                        dealViewModel.setAgent(d.getAgent().getName());
+                    } else {
+                        dealViewModel.setAgent(null);
+                    }
+                    return dealViewModel;
+                });
+    }
+
+
+
     public DealUpdateDto findById(Long id) {
-        return dealMapper.dealEntityToDealUpdateDto(dealRepository.findById(id).orElse(null));
+        DealUpdateDto dealUpdateDto = dealMapper.dealEntityToDealUpdateDto(dealRepository.findById(id).orElse(null));
+        return dealUpdateDto;
     }
 
     public void updateDeal(DealUpdateDto dealUpdateDto) {
-        dealRepository.save(dealMapper.dealEntityToDealUpdateDto(dealUpdateDto));
+        DealEntity dealEntity = dealMapper.dealEntityToDealUpdateDto(dealUpdateDto);
+        dealRepository.save(dealEntity);
 
     }
 
     public Page<DealViewModel> findAllDealsViewModelByCompanyID(Pageable pageable, Long id) {
-//        List<DealEntity> dealEntities = dealRepository.findByEmployeeId(id);
         return dealRepository.findByEmployeeId(pageable, id)
-//                .stream()
                     .map(d -> {
                     DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
                     dealViewModel.setCompany(d.getCompany().getName());
-//                    dealViewModel.setEmployee(d.getEmployee().getCompName());
-//                    if (d.getAgent() != null ) {
-//                        dealViewModel.setAgent(d.getAgent().getName());
-//                    } else {
-//                        dealViewModel.setAgent(null);
-//                    }
                     return dealViewModel;
                 });
-//                .collect(Collectors.toList());
     }
-                //BEFORE CHANGES
+
+    public Page<DealViewModel> findAllDealsViewModelByCompanyIDInTransit(Pageable pageable, Long id) {
+        return dealRepository.findByEmployeeIdInTransit(pageable, id, DELIVERED_STATUS)
+                .map(d -> {
+                    DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
+                    dealViewModel.setCompany(d.getCompany().getName());
+                    return dealViewModel;
+                });
+    }
+
+
+    public void changeStatus(DealUpdateDto dealUpdateDto) {
+        switch (dealUpdateDto.getStatus()) {
+            case SHIPPER_CONTACTED -> dealUpdateDto.setStatus(ShipmentStatusEnum.PICK_UP);
+            case PICK_UP -> dealUpdateDto.setStatus(ShipmentStatusEnum.DEPARTED);
+            case DEPARTED -> dealUpdateDto.setStatus(ShipmentStatusEnum.IN_TRANSIT);
+            case IN_TRANSIT -> dealUpdateDto.setStatus(ShipmentStatusEnum.ARRIVED);
+            case ARRIVED -> dealUpdateDto.setStatus(ShipmentStatusEnum.CLEARANCE);
+            case CLEARANCE -> dealUpdateDto.setStatus(ShipmentStatusEnum.OUT_FOR_DELIVERY);
+            case OUT_FOR_DELIVERY -> dealUpdateDto.setStatus(ShipmentStatusEnum.DELIVERED);
+            case DELIVERED -> dealUpdateDto.setStatus(ShipmentStatusEnum.DONE);
+            case DONE -> dealUpdateDto.setStatus(ShipmentStatusEnum.DONE);
+
+        }
+    }
+    //BEFORE CHANGES
 //    public List<DealViewModel> findAllDealsViewModelByCompanyID(Long id) {
 ////        List<DealEntity> dealEntities = dealRepository.findByEmployeeId(id);
 //        return dealRepository.findByEmployeeId(id)

@@ -57,19 +57,19 @@
 
         <a class="btn btn-secondary"
            th:classappend="${customerDeals.isFirst() ? 'disabled' : ''}"
-           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=0)}" href="#">First</a>
+           th:href="@{/deals/customer-all-deals(size=${customerDeals.getSize()},page=0)}" href="#">First</a>
 
         <a class="btn btn-secondary"
            th:classappend="${customerDeals.hasPrevious() ? '' : 'disabled'}"
-           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=${customerDeals.getNumber() - 1})}" href="#">Previous</a>
+           th:href="@{/deals/customer-all-deals(size=${customerDeals.getSize()},page=${customerDeals.getNumber() - 1})}" href="#">Previous</a>
 
         <a class="btn btn-secondary"
            th:classappend="${customerDeals.hasNext() ? '' : 'disabled'}"
-           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=${customerDeals.getNumber() + 1})}" href="#">Next</a>
+           th:href="@{/deals/customer-all-deals(size=${customerDeals.getSize()},page=${customerDeals.getNumber() + 1})}" href="#">Next</a>
 
         <a class="btn btn-secondary"
            th:classappend="${customerDeals.isLast() ? 'disabled' : ''}"
-           th:href="@{/deals/customer-deals(size=${customerDeals.getSize()},page=${customerDeals.getTotalPages() - 1})}" href="#">Last</a>
+           th:href="@{/deals/customer-all-deals(size=${customerDeals.getSize()},page=${customerDeals.getTotalPages() - 1})}" href="#">Last</a>
 
     </div>
 </div>

@@ -1,6 +1,7 @@
 package com.softuni.forwardingApp.repositories;
 
 import com.softuni.forwardingApp.models.entity.DealEntity;
+import com.softuni.forwardingApp.models.enums.ShipmentStatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,7 +32,12 @@ public interface DealRepository extends JpaRepository<DealEntity, Long> {
 //            " WHERE c.id = ?1" +
 //            " ORDER BY d.id DESC")
 //    List<DealViewModel> findAllDealsViewModelByCompanyID(Long id);
+    @Query("SELECT d FROM DealEntity d WHERE  d.status !=?1")
+    Page<DealEntity> findAllDealsInTransit(Pageable pageable, ShipmentStatusEnum status);
 
     @Query("SELECT d FROM DealEntity d JOIN d.company c WHERE c.id = ?1")
     Page<DealEntity> findByEmployeeId(Pageable pageable, Long id);
+
+    @Query("SELECT d FROM DealEntity d JOIN d.company c WHERE c.id = ?1 AND d.status !=?2")
+    Page<DealEntity> findByEmployeeIdInTransit(Pageable pageable, Long id, ShipmentStatusEnum status);
 }

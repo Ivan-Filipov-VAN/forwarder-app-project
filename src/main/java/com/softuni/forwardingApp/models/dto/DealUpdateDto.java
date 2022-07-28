@@ -5,6 +5,7 @@ import com.softuni.forwardingApp.models.entity.CompanyEntity;
 import com.softuni.forwardingApp.models.entity.DealEntity;
 import com.softuni.forwardingApp.models.entity.UserEntity;
 import com.softuni.forwardingApp.models.enums.AirTypeEnum;
+import com.softuni.forwardingApp.models.enums.ShipmentStatusEnum;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -28,6 +29,7 @@ public class DealUpdateDto {
     private Double chargeableWeight;
     private String country;
     private String airport;
+    private ShipmentStatusEnum status;
 
     public Long getId() {
         return id;
@@ -95,6 +97,10 @@ public class DealUpdateDto {
         return airport;
     }
 
+    public ShipmentStatusEnum getStatus() {
+        return status;
+    }
+
     public DealUpdateDto setId(Long id) {
         this.id = id;
         return this;
@@ -157,6 +163,11 @@ public class DealUpdateDto {
 
     public DealUpdateDto setAirport(String airport) {
         this.airport = airport;
+        return this;
+    }
+
+    public DealUpdateDto setStatus(ShipmentStatusEnum status) {
+        this.status = status;
         return this;
     }
 }

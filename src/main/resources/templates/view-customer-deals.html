@@ -22,9 +22,8 @@
                     <h4 th:text="|HAWB: ${d.hawb}|">HAWB</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="my-0 font-weight-normal">AIR SERVICE
-                        <!--                        <small class="text-muted">/mo</small>-->
-                    </h1>
+                    <h3 class="my-0 font-weight-normal" th:text="${d.status.name}">
+                    </h3>
                     <ul class="list-unstyled mt-3 mb-4">
                         <li th:text="|Type: ${d.type}|">Type</li>
                         <li th:text="|Date: ${d.date}|">date</li>

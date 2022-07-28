@@ -1,6 +1,7 @@
 package com.softuni.forwardingApp.models.entity;
 
 import com.softuni.forwardingApp.models.enums.AirTypeEnum;
+import com.softuni.forwardingApp.models.enums.ShipmentStatusEnum;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,6 +22,8 @@ public class DealEntity extends BaseEntity {
     private Double chargeableWeight;
     private String country;
     private String airport;
+
+    private ShipmentStatusEnum status;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -83,6 +86,11 @@ public class DealEntity extends BaseEntity {
         return airport;
     }
 
+    @Enumerated(EnumType.STRING)
+    public ShipmentStatusEnum getStatus() {
+        return status;
+    }
+
     public DealEntity setType(AirTypeEnum type) {
         this.type = type;
         return this;
@@ -140,6 +148,11 @@ public class DealEntity extends BaseEntity {
 
     public DealEntity setAirport(String airport) {
         this.airport = airport;
+        return this;
+    }
+
+    public DealEntity setStatus(ShipmentStatusEnum status) {
+        this.status = status;
         return this;
     }
 }

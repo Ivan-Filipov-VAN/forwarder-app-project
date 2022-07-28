@@ -47,6 +47,9 @@
                                 <a th:href="@{/deals/add-deal}"
                                    class="dropdown-item">Add Deal</a></li>
                             <li sec:authorize="hasRole('EMPLOYEE')">
+                                <a th:href="@{/deals/all-deals-in-transit}"
+                                   class="dropdown-item">In Transit</a></li>
+                            <li sec:authorize="hasRole('EMPLOYEE')">
                                 <a th:href="@{/deals/all-deals}"
                                    class="dropdown-item">All Deals</a></li>
                         </ul>

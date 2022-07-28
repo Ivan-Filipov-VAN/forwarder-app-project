@@ -29,7 +29,7 @@
         <th>Country</th>
         <th>Airport</th>
         <th>Status</th>
-        <th>EDIT</th>
+<!--        <th>EDIT</th>-->
     </tr>
     </thead>
     <tbody>
@@ -50,17 +50,17 @@
         <td th:text="${d.chargeableWeight}">pieces</td>
         <td th:text="${d.country}">pieces</td>
         <td th:text="${d.airport}">pieces</td>
-<!--        <td><a th:href="@{'/deals/change-status/' + ${d.id}}" th:text="${d.status}"></a></td>-->
+        <!--        <td><a th:href="@{'/deals/change-status/' + ${d.id}}" th:text="${d.status}"></a></td>-->
         <td>
-            <span th:if="${d.status == T(com.softuni.forwardingApp.models.enums.ShipmentStatusEnum).DONE}">
-                <span class="text-success" th:text="${d.status}"></span>
+            <span th:if="${d.status == 'DELIVERED'}">
+                <a th:text="${d.status}"></a>
             </span>
-            <span th:unless="${d.status == T(com.softuni.forwardingApp.models.enums.ShipmentStatusEnum).DONE}">
-                <a th:href="@{'/deals/change-status/' + ${d.id}}" th:text="${d.status}"></a>
+            <span th:unless="${d.status == 'DELIVERED'}">
+                <a th:href="@{'/deals/change-status-in-transit/' + ${d.id}}" th:text="${d.status}"></a>
             </span>
 
         </td>
-        <td><a th:href="@{'/deals/edit/' + ${d.id}}">Edit</a></td>
+<!--        <td><a th:href="@{'/deals/edit/' + ${d.id}}">Edit</a></td>-->
     </tr>
     </tbody>
 </table>
@@ -71,19 +71,19 @@
 
         <a class="btn btn-secondary"
            th:classappend="${allDeals.isFirst() ? 'disabled' : ''}"
-           th:href="@{/deals/all-deals(size=${allDeals.getSize()},page=0)}" href="#">First</a>
+           th:href="@{/deals/all-deals-in-transit(size=${allDeals.getSize()},page=0)}" href="#">First</a>
 
         <a class="btn btn-secondary"
            th:classappend="${allDeals.hasPrevious() ? '' : 'disabled'}"
-           th:href="@{/deals/all-deals(size=${allDeals.getSize()},page=${allDeals.getNumber() - 1})}" href="#">Previous</a>
+           th:href="@{/deals/all-deals-in-transit(size=${allDeals.getSize()},page=${allDeals.getNumber() - 1})}" href="#">Previous</a>
 
         <a class="btn btn-secondary"
            th:classappend="${allDeals.hasNext() ? '' : 'disabled'}"
-           th:href="@{/deals/all-deals(size=${allDeals.getSize()},page=${allDeals.getNumber() + 1})}" href="#">Next</a>
+           th:href="@{/deals/all-deals-in-transit(size=${allDeals.getSize()},page=${allDeals.getNumber() + 1})}" href="#">Next</a>
 
         <a class="btn btn-secondary"
            th:classappend="${allDeals.isLast() ? 'disabled' : ''}"
-           th:href="@{/deals/all-deals(size=${allDeals.getSize()},page=${allDeals.getTotalPages() - 1})}" href="#">Last</a>
+           th:href="@{/deals/all-deals-in-transit(size=${allDeals.getSize()},page=${allDeals.getTotalPages() - 1})}" href="#">Last</a>
 
     </div>
 </div>

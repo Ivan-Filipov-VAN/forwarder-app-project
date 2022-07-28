@@ -101,6 +101,66 @@ public class DealController {
         return "view-all-deals";
     }
 
+    @GetMapping("/all-deals-in-transit")
+    private String viewAllDealsInTransit(Model model,
+                                @PageableDefault(
+                                        page = 0,
+                                        size = 3
+                                ) Pageable pageable) {
+
+        Page<DealViewModel> allDeals = dealService.
+                findAllDealsViewModelInTransit(pageable);
+
+        model.addAttribute("allDeals", allDeals);
+        return "view-all-deals-in-transit";
+    }
+
+//    @GetMapping("/change-status/{id}")
+//    public DealUpdateDto changeStatus(@PathVariable("id") Long id) {
+//        DealUpdateDto dealUpdateDto = dealService.findById(id);
+//        return dealUpdateDto;
+//    }
+
+    @GetMapping("/change-status-in-transit/{id}")
+    public String confirmChangeStatusInTransit(
+            @PathVariable("id") Long id,
+            Model model,
+            @PageableDefault(
+                    page = 0,
+                    size = 3
+            ) Pageable pageable
+    ) {
+        DealUpdateDto dealUpdateDto = dealService.findById(id);
+        dealService.changeStatus(dealUpdateDto);
+        dealService.updateDeal(dealUpdateDto);
+
+        Page<DealViewModel> allDeals = dealService.
+                findAllDealsViewModelInTransit(pageable);
+
+        model.addAttribute("allDeals", allDeals);
+        return "view-all-deals-in-transit";
+    }
+
+    @GetMapping("/change-status/{id}")
+    public String confirmChangeStatus(
+            @PathVariable("id") Long id,
+            Model model,
+            @PageableDefault(
+                    page = 0,
+                    size = 3
+            ) Pageable pageable
+            ) {
+        DealUpdateDto dealUpdateDto = dealService.findById(id);
+        dealService.changeStatus(dealUpdateDto);
+        dealService.updateDeal(dealUpdateDto);
+
+        Page<DealViewModel> allDeals = dealService.
+                findAllDealsViewModel(pageable);
+
+        model.addAttribute("allDeals", allDeals);
+        return "view-all-deals";
+    }
+
     @GetMapping("/edit/{id}")
     public String editDeal(@PathVariable("id") Long id, Model model) {
         DealUpdateDto dealUpdateDto = dealService.findById(id);
@@ -160,7 +220,7 @@ public class DealController {
 //        return "view-all-deals";
 
         @GetMapping("/customer-deals")
-    private String viewCustomerDeals(
+        private String viewCustomerDeals(
             Model model,
             @PageableDefault(
                     page = 0,
@@ -174,7 +234,7 @@ public class DealController {
         }
         Long companyId = user.getCompany().getId();
 
-        Page<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(pageable, companyId);
+        Page<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyIDInTransit(pageable, companyId);
 
         model.addAttribute("customerDeals", customerDeals);
 

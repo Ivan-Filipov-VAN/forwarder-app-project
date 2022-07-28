@@ -42,7 +42,7 @@ public class SecurityConfig {
                         antMatchers("/users/editAddRoleCompany").hasRole(UserRoleEnum.ADMIN.name()).
                         antMatchers("/users/all-users").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/add-deal").hasRole(UserRoleEnum.EMPLOYEE.name()).
-                        antMatchers("/deals/all-deals").hasRole(UserRoleEnum.EMPLOYEE.name()).
+                        antMatchers("/deals/all-deals", "/deals/all-deals-in-transit", "/change-status-in-transit/{id}").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/update").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/edit/{id}").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/customer-deals", "/deals/customer-all-deals").hasRole(UserRoleEnum.CUSTOMER.name()).
