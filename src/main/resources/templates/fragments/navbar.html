@@ -110,14 +110,12 @@
                     </li>
 
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/users/register}" class="nav-link">
-                            Register
+                        <a th:href="@{/users/register}" class="nav-link" th:text="#{navbar_registration}">
                         </a>
                     </li>
 
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/users/login}" class="nav-link">
-                            Login
+                        <a th:href="@{/users/login}" class="nav-link" th:text="#{navbar_login}">
                         </a>
                     </li>
 
@@ -126,29 +124,36 @@
                            id="navbarDropdownCustomerDeals"
                            role="button"
                            data-bs-toggle="dropdown"
-                           aria-expanded="false">
+                           aria-expanded="false"
+                           th:text="#{navbar_customer_deals}">
                             Deals
                         </a>
                         <ul class="dropdown-menu"
                             aria-labelledby="navbarDropdown">
                             <li sec:authorize="hasRole('CUSTOMER')">
                                 <a th:href="@{/deals/customer-deals}"
-                                   class="dropdown-item">Deals</a></li>
+                                   class="dropdown-item" th:text="#{navbar_customer_deals}">Deals</a></li>
                             <li sec:authorize="hasRole('CUSTOMER')">
                                 <a th:href="@{/deals/customer-all-deals}"
-                                   class="dropdown-item">All Deals</a></li>
+                                   class="dropdown-item" th:text="#{navbar_customer_all_deals}">All Deals</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item d-flex" sec:authorize="isAuthenticated()">
-                        <a class="nav-link">
-                            Welcome,
-                            <th:block th:text="${#authentication.principal.fullName}"></th:block>
+                        <a class="nav-link" th:text="#{navbar_welcome}">
                         </a>
                     </li>
+
+                    <li class="nav-item d-flex" sec:authorize="isAuthenticated()">
+                        <a class="nav-link">
+                            <th:block th:text="${#authentication.principal.fullName}"></th:block>
+                        </a>
+
+                    </li>
+
                     <li class="nav-item d-flex" sec:authorize="isAuthenticated()">
                         <form th:action="@{/users/logout}" th:method="post">
-                            <input class="btn btn-link nav-link" type="submit" value="Logout">
+                            <input class="btn btn-link nav-link" type="submit" th:value="#{navbar_exit}">
                         </form>
                     </li>
 
@@ -156,12 +161,30 @@
                 </ul>
 
             </div>
-            <form class="d-flex">
-                <input type="text" class="form-control me-2">
-                <button type="submit" class="btn
-            btn-primary">Search
-                </button>
-            </form>
+<!--            <form class="d-flex">-->
+<!--                <input type="text" class="form-control me-2">-->
+<!--                <button type="submit" class="btn-->
+<!--            btn-primary">Search-->
+<!--                </button>-->
+<!--            </form>-->
+
+            <li class="nav-item d-flex me-2">
+                <form th:method="get">
+                    <select
+                        onchange="this.form.submit()"
+                        class="btn-group"
+                        role="group"
+                        id="lang"
+                        name="lang">
+                        <option value="" th:text="#{navbar_language}" >Select</option>
+                        <option th:value="en_US" th:selected="English == 'en_US'" >English</option>
+                        <option th:value="bg_BG" th:selected="Български == 'bg_BG'">Български</option>
+
+                    </select>
+
+
+                </form>
+            </li>
         </div>
     </nav>
 </div>
