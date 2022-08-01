@@ -34,10 +34,10 @@ public class CompanyService {
         return company;
     }
 
-    public void addCompany(CompanyAddDto companyAddDto) {
+    public CompanyEntity addCompany(CompanyAddDto companyAddDto) {
         CompanyEntity company = modelMapper.map(companyAddDto, CompanyEntity.class);
-
         companyRepository.save(company);
+        return company;
     }
 
     public List<CompanyEntity> findAll() {
@@ -50,8 +50,10 @@ public class CompanyService {
     }
 
 
-    public void save(CompanyUpdateDto company) {
-        companyRepository.save(modelMapper.map(company, CompanyEntity.class));
+    public CompanyEntity save(CompanyUpdateDto company) {
+        CompanyEntity companyEntity = modelMapper.map(company, CompanyEntity.class);
+        companyRepository.save(companyEntity);
+        return companyEntity;
     }
 
     public CompanyEntity findById(Long id) {

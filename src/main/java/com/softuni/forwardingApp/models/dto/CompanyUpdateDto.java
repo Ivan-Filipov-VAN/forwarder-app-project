@@ -1,5 +1,8 @@
 package com.softuni.forwardingApp.models.dto;
 
+import com.softuni.forwardingApp.validation.UniqueCompanyName;
+import com.softuni.forwardingApp.validation.UniqueCompanyVat;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 

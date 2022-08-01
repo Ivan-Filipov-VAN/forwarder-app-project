@@ -13,12 +13,12 @@ public class CompanyEntity extends BaseEntity {
     private String address;
     private String accountablePerson;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     public String getName() {
         return name;
     }
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     public String getVat() {
         return vat;
     }

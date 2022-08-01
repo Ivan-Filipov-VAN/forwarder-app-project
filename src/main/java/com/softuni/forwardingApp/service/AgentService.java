@@ -45,8 +45,10 @@ public class AgentService {
     }
 
 
-    public void addAgent(AgentAddDto agentAddDto) {
-        agentRepository.save(modelMapper.map(agentAddDto, AgentEntity.class));
+    public AgentEntity addAgent(AgentAddDto agentAddDto) {
+        AgentEntity agent = modelMapper.map(agentAddDto, AgentEntity.class);
+        agentRepository.save(agent);
+        return agent;
     }
 
     public List<AgentViewModel> findAllAgents() {
@@ -57,11 +59,13 @@ public class AgentService {
     }
 
     public AgentUpdateDto getById(Long id) {
-        return modelMapper.map(agentRepository.findById(id), AgentUpdateDto.class);
+        return modelMapper.map(agentRepository.findById(id).orElse(null), AgentUpdateDto.class);
     }
 
-    public void save(AgentUpdateDto agent) {
-        agentRepository.save(modelMapper.map(agent, AgentEntity.class));
+    public AgentEntity save(AgentUpdateDto agent) {
+        AgentEntity agentEntity = modelMapper.map(agent, AgentEntity.class);
+        agentRepository.save(agentEntity);
+        return agentEntity;
     }
 
     public List<AgentViewIdName> findAllAgentsByIdName() {
