@@ -35,10 +35,10 @@ public class DealAddDto {
         return date;
     }
 
-    public DealAddDto setDate(LocalDate date) {
-        this.date = date;
-        return this;
-    }
+//    public DealAddDto setDate(LocalDate date) {
+//        this.date = date;
+//        return this;
+//    }
 
     public String getMawb() {
         return mawb;

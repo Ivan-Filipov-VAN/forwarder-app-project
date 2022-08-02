@@ -66,12 +66,12 @@ public class AgentController {
     }
 
     @GetMapping("/save")
-    public String confirmUpdateCompany() {
+    public String saveAgent() {
         return "edit-agent";
     }
 
     @PostMapping("/save")
-    public String saveAgent(@Valid AgentUpdateDto agent,
+    public String confirmSaveAgent(@Valid AgentUpdateDto agent,
                             BindingResult bindingResult,
                             RedirectAttributes redirectAttributes) {
 

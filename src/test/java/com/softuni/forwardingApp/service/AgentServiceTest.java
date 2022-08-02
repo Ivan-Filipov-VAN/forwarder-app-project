@@ -114,7 +114,7 @@ public class AgentServiceTest {
                 .setCountry("mg")
                 .setTown("mmm")
                 .setAddress("ggg");
-        secondAgent.setId(13L);
+        secondAgentView.setId(13L);
 
         AgentViewModel thirdAgentView = new AgentViewModel()
                 .setName("third")
@@ -139,6 +139,7 @@ public class AgentServiceTest {
         Assertions.assertEquals(secondAgent.getCountry(), allAgents.get(0).getCountry());
         Assertions.assertEquals(secondAgent.getAddress(), allAgents.get(0).getAddress());
         Assertions.assertEquals(secondAgent.getTown(), allAgents.get(0).getTown());
+        Assertions.assertEquals(secondAgent.getId(), allAgents.get(0).getId());
 
         Assertions.assertEquals(thirdAgent.getName(), allAgents.get(1).getName());
         Assertions.assertEquals(thirdAgent.getVat(), allAgents.get(1).getVat());

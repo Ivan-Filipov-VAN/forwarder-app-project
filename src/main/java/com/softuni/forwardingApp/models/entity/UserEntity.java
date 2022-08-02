@@ -98,9 +98,8 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public UserEntity addRole(UserRoleEntity userRole) {
+    public void addRole(UserRoleEntity userRole) {
         this.userRoles.add(userRole);
-        return this;
     }
 
     public UserEntity setCompName(String compName) {

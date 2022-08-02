@@ -14,6 +14,10 @@ public interface DealMapper {
 
     @Mapping(target = "date", defaultExpression = "java(LocalDate.now())")
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "company", ignore = true)
+    @Mapping(target = "agent", ignore = true)
+    @Mapping(target = "employee", ignore = true)
     DealEntity dealAddDtoToDealEntity(DealAddDto dealAddDto);
 
     DealUpdateDto dealEntityToDealUpdateDto(DealEntity dealEntity);

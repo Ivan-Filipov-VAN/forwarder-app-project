@@ -40,6 +40,7 @@ public class SecurityConfig {
                         antMatchers("/agents/save").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/users/new-users").hasRole(UserRoleEnum.ADMIN.name()).
                         antMatchers("/users/editAddRoleCompany").hasRole(UserRoleEnum.ADMIN.name()).
+                        antMatchers("/users/editAddRoleCompany/{id}").hasRole(UserRoleEnum.ADMIN.name()).
                         antMatchers("/users/all-users").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/add-deal").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/all-deals", "/deals/all-deals-in-transit", "/change-status-in-transit/{id}").hasRole(UserRoleEnum.EMPLOYEE.name()).

@@ -37,7 +37,7 @@ public class DealService {
         this.dealMapper = dealMapper;
     }
 
-    public void addDeal(DealAddDto dealAddDto) {
+    public DealEntity addDeal(DealAddDto dealAddDto) {
         DealEntity dealEntity = dealMapper.dealAddDtoToDealEntity(dealAddDto);
         if (dealAddDto.getIdAgent() != null) {
             dealEntity.setAgent(agentService.findById(dealAddDto.getIdAgent()));
@@ -47,6 +47,7 @@ public class DealService {
         dealEntity.setStatus(ShipmentStatusEnum.SHIPPER_CONTACTED);
 
         dealRepository.save(dealEntity);
+        return dealEntity;
     }
 
 //    public List<DealViewModel> findAllDealsViewModel() {

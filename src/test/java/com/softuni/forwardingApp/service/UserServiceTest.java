@@ -41,9 +41,6 @@ public class UserServiceTest {
 
     private UserService serviceToTest;
 
-    public UserServiceTest() {
-    }
-
     @BeforeEach
     void setUp() {
         serviceToTest = new UserService(
@@ -407,19 +404,17 @@ public class UserServiceTest {
         when(mockModelMapper.map(testSecondUser, UserViewModel.class)).
                 thenReturn(resultTestSecond);
 
-
-//        private Long id;
-//        private String email;
-//        private String firstName;
-//        private String lastName;
-//        private String phoneNumber;
-//        private List<UserRoleEntity> userRoles = new ArrayList<>();
-//        private CompanyEntity company;
-
         List<UserViewModel> allUserViewModels = serviceToTest.findAllUserViewModels();
 
         Assertions.assertEquals(2, allUserViewModels.size());
         Assertions.assertEquals(testFirstUser.getEmail(), allUserViewModels.get(0).getEmail());
+        Assertions.assertEquals(testFirstUser.getFirstName(), allUserViewModels.get(0).getFirstName());
+        Assertions.assertEquals(testFirstUser.getLastName(), allUserViewModels.get(0).getLastName());
+        Assertions.assertEquals(testFirstUser.getUserRoles().size(), allUserViewModels.get(0).getUserRoles().size());
+        Assertions.assertEquals(testFirstUser.getCompany().getId(), allUserViewModels.get(0).getCompany().getId());
+        Assertions.assertEquals(testFirstUser.getPhoneNumber(), allUserViewModels.get(0).getPhoneNumber());
+        Assertions.assertEquals(testFirstUser.getId(), allUserViewModels.get(0).getId());
+
         Assertions.assertEquals(testSecondUser.getEmail(), allUserViewModels.get(1).getEmail());
 
     }
@@ -472,6 +467,37 @@ public class UserServiceTest {
         Assertions.assertEquals(testFirstUser.getPhoneNumber(), result.getPhoneNumber());
         Assertions.assertEquals(testFirstUser.getCompany().getId(), result.getIdCompany());
 
+    }
+
+    @Test
+    void testUserAddRole () {
+
+        CompanyEntity testCompany = new CompanyEntity()
+                .setName("company")
+                .setVat("111111")
+                .setAccountablePerson("pesho")
+                .setAddress("mladost");
+
+        UserEntity testFourthUser =
+                new UserEntity()
+                        .setFirstName("fesho")
+                        .setLastName("gosho")
+                        .setEmail("fesho@gosho.com")
+                        .setPassword("1111")
+                        .setPhoneNumber("11111111")
+                        .setCompany(testCompany)
+                        .setCompName("company")
+                        .setCompVAT("111111")
+                        .setUserRoles(List.of(
+                                        new UserRoleEntity().setUserRole(UserRoleEnum.ADMIN),
+                                        new UserRoleEntity().setUserRole(UserRoleEnum.EMPLOYEE)
+                                )
+                        );
+
+//        Assertions.assertEquals(2, testFourthUser.getUserRoles().size());
+
+        UserRoleEntity userRole = new UserRoleEntity().setUserRole(UserRoleEnum.USER);
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> testFourthUser.addRole(userRole));
     }
 
 
