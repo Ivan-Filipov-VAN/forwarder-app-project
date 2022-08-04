@@ -3,14 +3,18 @@ package com.softuni.forwardingApp.service;
 import com.softuni.forwardingApp.models.dto.DealAddDto;
 import com.softuni.forwardingApp.models.dto.DealUpdateDto;
 import com.softuni.forwardingApp.models.entity.DealEntity;
+import com.softuni.forwardingApp.models.enums.AirTypeEnum;
 import com.softuni.forwardingApp.models.enums.ShipmentStatusEnum;
 import com.softuni.forwardingApp.models.mapper.DealMapper;
 import com.softuni.forwardingApp.models.view.DealViewModel;
+import com.softuni.forwardingApp.models.view.StatisticViewModel;
 import com.softuni.forwardingApp.repositories.DealRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,16 +29,20 @@ public class DealService {
     private final CompanyService companyService;
     private final UserService userService;
     private final DealMapper dealMapper;
+    private final EmailService emailService;
 
     public DealService(DealRepository dealRepository,
                        AgentService agentService,
                        CompanyService companyService,
-                       UserService userService, DealMapper dealMapper) {
+                       UserService userService,
+                       DealMapper dealMapper,
+                       EmailService emailService) {
         this.dealRepository = dealRepository;
         this.agentService = agentService;
         this.companyService = companyService;
         this.userService = userService;
         this.dealMapper = dealMapper;
+        this.emailService = emailService;
     }
 
     public DealEntity addDeal(DealAddDto dealAddDto) {
@@ -50,28 +58,6 @@ public class DealService {
         dealRepository.save(dealEntity);
         return dealEntity;
     }
-
-//    public List<DealViewModel> findAllDealsViewModel() {
-//
-//        List<DealEntity> dealEntities = dealRepository.findAll();
-//        List<DealViewModel> dealViewModels = dealEntities
-//                .stream()
-//                .map(d -> {
-//                    DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
-//                        dealViewModel.setCompany(d.getCompany().getName());
-//                        dealViewModel.setEmployee(d.getEmployee().getEmail());
-//                        if (d.getAgent() != null ) {
-//                            dealViewModel.setAgent(d.getAgent().getName());
-//                        } else {
-//                            dealViewModel.setAgent(null);
-//                        }
-//                        return dealViewModel;
-//                })
-//                .collect(Collectors.toList());
-//
-//        return dealViewModels;
-////        return dealRepository.findAllDealsViewModel();
-//    }
 
     public Page<DealViewModel> findAllDealsViewModel(Pageable pageable) {
 
@@ -169,23 +155,15 @@ public class DealService {
         }
     }
 
+    @Scheduled(cron = "0 0 7 * * *")
+    public void sendStatistic() {
+        Long imp = dealRepository.getStatistic(AirTypeEnum.IMP, LocalDate.now().minusDays(1));
+        Long exp = dealRepository.getStatistic(AirTypeEnum.EXP, LocalDate.now().minusDays(1));
+        StatisticViewModel statistic = new StatisticViewModel(imp, exp);
 
-    //BEFORE CHANGES
-//    public List<DealViewModel> findAllDealsViewModelByCompanyID(Long id) {
-////        List<DealEntity> dealEntities = dealRepository.findByEmployeeId(id);
-//        return dealRepository.findByEmployeeId(id)
-//                .stream()
-//                .map(d -> {
-//                    DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
-//                    dealViewModel.setCompany(d.getCompany().getName());
-////                    dealViewModel.setEmployee(d.getEmployee().getCompName());
-////                    if (d.getAgent() != null ) {
-////                        dealViewModel.setAgent(d.getAgent().getName());
-////                    } else {
-////                        dealViewModel.setAgent(null);
-////                    }
-//                    return dealViewModel;
-//                })
-//                .collect(Collectors.toList());
-//    }
+        emailService.sendStatistic(statistic);
+    }
+
+
+
 }

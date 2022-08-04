@@ -48,6 +48,7 @@ public class DealServiceTest {
 
     @Mock
     private DealMapper mockDealMapper;
+    @Mock EmailService emailService;
 
     private DealService serviceToTest;
 
@@ -66,7 +67,8 @@ public class DealServiceTest {
                 mockAgentService,
                 mockCompanyService,
                 mockUserService,
-                mockDealMapper);
+                mockDealMapper,
+                emailService);
 
         companyEntity = new CompanyEntity()
                 .setName("first")

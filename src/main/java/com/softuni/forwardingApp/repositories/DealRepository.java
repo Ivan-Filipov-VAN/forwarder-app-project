@@ -1,13 +1,16 @@
 package com.softuni.forwardingApp.repositories;
 
 import com.softuni.forwardingApp.models.entity.DealEntity;
+import com.softuni.forwardingApp.models.enums.AirTypeEnum;
 import com.softuni.forwardingApp.models.enums.ShipmentStatusEnum;
+import com.softuni.forwardingApp.models.view.StatisticViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -42,4 +45,7 @@ public interface DealRepository extends JpaRepository<DealEntity, Long> {
     Page<DealEntity> findByEmployeeIdInTransit(Pageable pageable, Long id, ShipmentStatusEnum status);
 
     Page<DealEntity> findByArchiveFalse(Pageable pageable);
+
+    @Query("SELECT count(d) FROM DealEntity d WHERE d.type = ?1 AND d.date = ?2 ")
+    Long getStatistic(AirTypeEnum type, LocalDate date);
 }

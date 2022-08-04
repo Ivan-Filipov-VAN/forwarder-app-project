@@ -1,13 +1,9 @@
 package com.softuni.forwardingApp.init;
 
-import com.softuni.forwardingApp.models.entity.AgentEntity;
 import com.softuni.forwardingApp.models.entity.CompanyEntity;
 import com.softuni.forwardingApp.models.entity.UserRoleEntity;
 import com.softuni.forwardingApp.models.enums.UserRoleEnum;
-import com.softuni.forwardingApp.service.AgentService;
-import com.softuni.forwardingApp.service.CompanyService;
-import com.softuni.forwardingApp.service.RoleService;
-import com.softuni.forwardingApp.service.UserService;
+import com.softuni.forwardingApp.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +21,8 @@ public class InitData implements CommandLineRunner {
     public InitData(RoleService roleService
             ,UserService userService
             ,CompanyService companyService
-            ,AgentService agentService
-    ) {
+            ,AgentService agentService,
+                    DealService dealService) {
         this.roleService = roleService;
         this.userService = userService;
         this.companyService = companyService;
