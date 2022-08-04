@@ -12,6 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class DealUpdateDto {
@@ -34,6 +35,10 @@ public class DealUpdateDto {
     public Long getId() {
         return id;
     }
+
+    private BigDecimal sell;
+    private BigDecimal net;
+    private Boolean archive;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -168,6 +173,33 @@ public class DealUpdateDto {
 
     public DealUpdateDto setStatus(ShipmentStatusEnum status) {
         this.status = status;
+        return this;
+    }
+
+    public BigDecimal getSell() {
+        return sell;
+    }
+
+    public DealUpdateDto setSell(BigDecimal sell) {
+        this.sell = sell;
+        return this;
+    }
+
+    public BigDecimal getNet() {
+        return net;
+    }
+
+    public DealUpdateDto setNet(BigDecimal net) {
+        this.net = net;
+        return this;
+    }
+
+    public Boolean getArchive() {
+        return archive;
+    }
+
+    public DealUpdateDto setArchive(Boolean archive) {
+        this.archive = archive;
         return this;
     }
 }

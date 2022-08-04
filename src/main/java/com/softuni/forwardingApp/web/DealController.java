@@ -101,6 +101,21 @@ public class DealController {
         return "view-all-deals";
     }
 
+    @GetMapping("all-deals-not-closed")
+    private String viewAllDealsNotClosed(Model model,
+                                         @PageableDefault(
+                                                 page = 0,
+                                                 size = 15
+                                         ) Pageable pageable ) {
+
+        Page<DealViewModel> allDeals = dealService.
+                findAllDealsViewModelNotClosed(pageable);
+
+        model.addAttribute("allDeals", allDeals);
+        return "view-all-deals-not-closed";
+
+    }
+
     @GetMapping("/all-deals-in-transit")
     private String viewAllDealsInTransit(Model model,
                                 @PageableDefault(
@@ -171,6 +186,7 @@ public class DealController {
 
         model.addAttribute("companies", companies);
         model.addAttribute("agents", agents);
+        model.addAttribute("booleanTrue", true);
 
         return "edit-deals";
     }
@@ -199,6 +215,7 @@ public class DealController {
 
             return "redirect:update";
         }
+
 
         dealService.updateDeal(dealUpdateDto);
 

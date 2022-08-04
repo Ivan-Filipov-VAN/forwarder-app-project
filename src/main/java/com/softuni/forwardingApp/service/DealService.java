@@ -42,6 +42,7 @@ public class DealService {
         if (dealAddDto.getIdAgent() != null) {
             dealEntity.setAgent(agentService.findById(dealAddDto.getIdAgent()));
         }
+        dealEntity.setArchive(false);
         dealEntity.setCompany(companyService.findById(dealAddDto.getIdCompany()));
         dealEntity.setEmployee(userService.findById(dealAddDto.getIdEmployee()));
         dealEntity.setStatus(ShipmentStatusEnum.SHIPPER_CONTACTED);
@@ -111,6 +112,9 @@ public class DealService {
     }
 
     public void updateDeal(DealUpdateDto dealUpdateDto) {
+        if (dealUpdateDto.getArchive() == null) {
+            dealUpdateDto.setArchive(false);
+        }
         DealEntity dealEntity = dealMapper.dealUpdateDtoToDealEntity(dealUpdateDto);
         dealRepository.save(dealEntity);
 
@@ -134,6 +138,21 @@ public class DealService {
                 });
     }
 
+    public Page<DealViewModel> findAllDealsViewModelNotClosed(Pageable pageable) {
+        return dealRepository.findByArchiveFalse(pageable)
+                .map(d -> {
+                    DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
+                    dealViewModel.setCompany(d.getCompany().getName());
+                    dealViewModel.setEmployee(d.getEmployee().getEmail());
+                    if (d.getAgent() != null) {
+                        dealViewModel.setAgent(d.getAgent().getName());
+                    } else {
+                        dealViewModel.setAgent(null);
+                    }
+                    return dealViewModel;
+                });
+    }
+
 
     public void changeStatus(DealUpdateDto dealUpdateDto) {
         switch (dealUpdateDto.getStatus()) {
@@ -149,6 +168,8 @@ public class DealService {
 
         }
     }
+
+
     //BEFORE CHANGES
 //    public List<DealViewModel> findAllDealsViewModelByCompanyID(Long id) {
 ////        List<DealEntity> dealEntities = dealRepository.findByEmployeeId(id);

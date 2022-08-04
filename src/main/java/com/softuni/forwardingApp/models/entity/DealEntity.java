@@ -4,6 +4,7 @@ import com.softuni.forwardingApp.models.enums.AirTypeEnum;
 import com.softuni.forwardingApp.models.enums.ShipmentStatusEnum;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -24,6 +25,10 @@ public class DealEntity extends BaseEntity {
     private String airport;
 
     private ShipmentStatusEnum status;
+
+    private BigDecimal sell;
+    private BigDecimal net;
+    private Boolean archive;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -153,6 +158,33 @@ public class DealEntity extends BaseEntity {
 
     public DealEntity setStatus(ShipmentStatusEnum status) {
         this.status = status;
+        return this;
+    }
+
+    public BigDecimal getSell() {
+        return sell;
+    }
+
+    public DealEntity setSell(BigDecimal sell) {
+        this.sell = sell;
+        return this;
+    }
+
+    public BigDecimal getNet() {
+        return net;
+    }
+
+    public DealEntity setNet(BigDecimal net) {
+        this.net = net;
+        return this;
+    }
+
+    public Boolean getArchive() {
+        return archive;
+    }
+
+    public DealEntity setArchive(Boolean archive) {
+        this.archive = archive;
         return this;
     }
 }

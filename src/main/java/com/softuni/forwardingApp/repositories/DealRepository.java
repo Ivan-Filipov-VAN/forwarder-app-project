@@ -40,4 +40,6 @@ public interface DealRepository extends JpaRepository<DealEntity, Long> {
 
     @Query("SELECT d FROM DealEntity d JOIN d.company c WHERE c.id = ?1 AND d.status !=?2")
     Page<DealEntity> findByEmployeeIdInTransit(Pageable pageable, Long id, ShipmentStatusEnum status);
+
+    Page<DealEntity> findByArchiveFalse(Pageable pageable);
 }
