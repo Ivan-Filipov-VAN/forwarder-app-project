@@ -107,12 +107,11 @@ public class DealService {
 
 
     public DealUpdateDto findById(Long id) {
-        DealUpdateDto dealUpdateDto = dealMapper.dealEntityToDealUpdateDto(dealRepository.findById(id).orElse(null));
-        return dealUpdateDto;
+        return dealMapper.dealEntityToDealUpdateDto(dealRepository.findById(id).orElse(null));
     }
 
     public void updateDeal(DealUpdateDto dealUpdateDto) {
-        DealEntity dealEntity = dealMapper.dealEntityToDealUpdateDto(dealUpdateDto);
+        DealEntity dealEntity = dealMapper.dealUpdateDtoToDealEntity(dealUpdateDto);
         dealRepository.save(dealEntity);
 
     }

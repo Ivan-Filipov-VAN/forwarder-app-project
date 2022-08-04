@@ -22,7 +22,7 @@ public interface DealMapper {
 
     DealUpdateDto dealEntityToDealUpdateDto(DealEntity dealEntity);
 
-    DealEntity dealEntityToDealUpdateDto(DealUpdateDto dealUpdateDto);
+    DealEntity dealUpdateDtoToDealEntity(DealUpdateDto dealUpdateDto);
 
     @Mapping(target = "company", ignore = true)
     @Mapping(target = "employee", ignore = true)
