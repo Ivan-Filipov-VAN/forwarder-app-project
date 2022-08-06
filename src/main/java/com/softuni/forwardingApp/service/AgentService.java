@@ -42,6 +42,10 @@ public class AgentService {
         agentRepository.save(firstAgent);
         agentRepository.save(secondAgent);
         agentRepository.save(thirdAgent);
+
+        agentRepository.save(new AgentEntity().setName("Fast Ex").setCountry("Philippines"));
+        agentRepository.save(new AgentEntity().setName("Scan Pro").setCountry("Germany"));
+        agentRepository.save(new AgentEntity().setName("Italy Fast").setCountry("Italy"));
     }
 
 

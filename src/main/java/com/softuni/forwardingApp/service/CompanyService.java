@@ -31,6 +31,19 @@ public class CompanyService {
                 .setAccountablePerson("Ivan Ivanov");
 
         companyRepository.save(company);
+
+        companyRepository.save(new CompanyEntity().setName("Micro Ltd").setVat("12345678"));
+        companyRepository.save(new CompanyEntity().setName("Integrated Ltd").setVat("22345678"));
+        companyRepository.save(new CompanyEntity().setName("Mercury Ltd").setVat("32345678"));
+        companyRepository.save(new CompanyEntity().setName("Venus Ltd").setVat("42345678"));
+        companyRepository.save(new CompanyEntity().setName("Earth Ltd").setVat("52345678"));
+        companyRepository.save(new CompanyEntity().setName("Mars Ltd").setVat("62345678"));
+        companyRepository.save(new CompanyEntity().setName("Jupiter Ltd").setVat("72345678"));
+        companyRepository.save(new CompanyEntity().setName("Saturn Ltd").setVat("82345678"));
+        companyRepository.save(new CompanyEntity().setName("Uranus Ltd").setVat("92345678"));
+        companyRepository.save(new CompanyEntity().setName("Neptune Ltd").setVat("13345678"));
+        companyRepository.save(new CompanyEntity().setName("Pluto Ltd").setVat("14345678"));
+
         return company;
     }
 

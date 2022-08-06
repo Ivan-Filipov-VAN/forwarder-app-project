@@ -2,6 +2,7 @@ package com.softuni.forwardingApp.service;
 
 import com.softuni.forwardingApp.models.dto.DealAddDto;
 import com.softuni.forwardingApp.models.dto.DealUpdateDto;
+import com.softuni.forwardingApp.models.entity.CompanyEntity;
 import com.softuni.forwardingApp.models.entity.DealEntity;
 import com.softuni.forwardingApp.models.enums.AirTypeEnum;
 import com.softuni.forwardingApp.models.enums.ShipmentStatusEnum;
@@ -165,5 +166,83 @@ public class DealService {
     }
 
 
+    public void initDeals() {
+        if (dealRepository.count() > 0) {
+            return;
+        }
 
+        CompanyEntity companyEntity = companyService.findById(2L);
+
+        DealEntity first = new DealEntity()
+                .setType(AirTypeEnum.IMP)
+                .setMawb("234-4444 5555")
+                .setHawb("HAWB345345")
+                .setPieces(4)
+                .setActualWeight(345.0)
+                .setChargeableWeight(345.0)
+                .setCompany(companyEntity)
+                .setAgent(agentService.findById(3L))
+                .setCountry("KR")
+                .setAirport("ICN")
+                .setDate(LocalDate.now())
+                .setStatus(ShipmentStatusEnum.PICK_UP)
+                .setEmployee(userService.findById(1L))
+                .setArchive(false);
+
+        dealRepository.save(first);
+
+        DealEntity second = new DealEntity()
+                .setType(AirTypeEnum.IMP)
+                .setMawb("234-4444 5566")
+                .setHawb("HAWB345346")
+                .setPieces(7)
+                .setActualWeight(456.0)
+                .setChargeableWeight(555.0)
+                .setCompany(companyEntity)
+                .setAgent(agentService.findById(4L))
+                .setCountry("PH")
+                .setAirport("MNL")
+                .setDate(LocalDate.now())
+                .setStatus(ShipmentStatusEnum.DEPARTED)
+                .setEmployee(userService.findById(1L))
+                .setArchive(false);
+
+        dealRepository.save(second);
+
+        DealEntity third = new DealEntity()
+                .setType(AirTypeEnum.IMP)
+                .setMawb("234-4444 5577")
+                .setHawb("HAWB345347")
+                .setPieces(2)
+                .setActualWeight(123.0)
+                .setChargeableWeight(123.0)
+                .setCompany(companyEntity)
+                .setAgent(agentService.findById(4L))
+                .setCountry("PH")
+                .setAirport("MNL")
+                .setDate(LocalDate.now())
+                .setStatus(ShipmentStatusEnum.ARRIVED)
+                .setEmployee(userService.findById(1L))
+                .setArchive(false);
+
+        dealRepository.save(third);
+
+        DealEntity fourth = new DealEntity()
+                .setType(AirTypeEnum.IMP)
+                .setMawb("234-4444 5588")
+                .setHawb("HAWB345348")
+                .setPieces(8)
+                .setActualWeight(666.0)
+                .setChargeableWeight(678.0)
+                .setCompany(companyEntity)
+                .setAgent(agentService.findById(2L))
+                .setCountry("CN")
+                .setAirport("BJS")
+                .setDate(LocalDate.now())
+                .setStatus(ShipmentStatusEnum.IN_TRANSIT)
+                .setEmployee(userService.findById(1L))
+                .setArchive(false);
+
+        dealRepository.save(fourth);
+    }
 }

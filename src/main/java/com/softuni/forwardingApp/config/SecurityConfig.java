@@ -25,11 +25,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.
-                // define which requests are allowed and which not
                         authorizeRequests().
-                // everyone can download static resources (css, js, images)
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
-                // everyone can login and register
                         antMatchers("/", "/users/login", "/users/register").permitAll().
                         antMatchers("/companies/add-company").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/companies/all-company").hasRole(UserRoleEnum.EMPLOYEE.name()).
@@ -47,30 +44,19 @@ public class SecurityConfig {
                         antMatchers("/deals/update").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/edit/{id}").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/deals/customer-deals", "/deals/customer-all-deals").hasRole(UserRoleEnum.CUSTOMER.name()).
-                // all other pages are available for logger in users
                         anyRequest().
                 authenticated().
                 and().
-                // configuration of form login
                         formLogin().
-                // the custom login form
                         loginPage("/users/login").
-                // the name of the username form field
                         usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
-                // the name of the password form field
                         passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
-                // where to go in case that the login is successful
                         defaultSuccessUrl("/").
-                // where to go in case that the login failed
                         failureForwardUrl("/users/login-error").
                 and().
-                // configure logut
                         logout().
-                // which is the logout url, must be POST request
                         logoutUrl("/users/logout").
-                // on logout go to the home page
                         logoutSuccessUrl("/").
-                // invalidate the session and delete the cookies
                         invalidateHttpSession(true).
                 deleteCookies("JSESSIONID");
 

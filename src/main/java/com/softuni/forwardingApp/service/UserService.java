@@ -90,9 +90,55 @@ public class UserService {
                 .setCompVAT("69696969");
 
         userRepository.save(admin);
-
-
     }
+
+    public void initUsers(List<UserRoleEntity> roles, CompanyEntity company) {
+
+        if (userRepository.count() > 1) {
+            return;
+        }
+
+        UserEntity employee = new UserEntity()
+                .setFirstName("Van")
+                .setLastName("Vanov")
+                .setEmail("van@van.com")
+                .setPassword(passwordEncoder.encode("1234"))
+                .setPhoneNumber("0891556566")
+                .setUserRoles(List.of(roles.get(0)))
+                .setCompany(company)
+                .setCompName("5Ex Cargo")
+                .setCompVAT("69696969");
+
+        userRepository.save(employee);
+
+        UserEntity client = new UserEntity()
+                .setFirstName("Zan")
+                .setLastName("Zanov")
+                .setEmail("zan@zan.com")
+                .setPassword(passwordEncoder.encode("1234"))
+                .setPhoneNumber("0891123456")
+                .setUserRoles(List.of(roles.get(1)))
+                .setCompany(companyService.findById(2L))
+                .setCompName("Micro Ltd")
+                .setCompVAT("12345678");
+
+        userRepository.save(client);
+
+        UserEntity user = new UserEntity()
+                .setFirstName("Man")
+                .setLastName("Manov")
+                .setEmail("man@man.com")
+                .setPassword(passwordEncoder.encode("1234"))
+                .setPhoneNumber("0891125656")
+                .setUserRoles(List.of())
+                .setCompName("Spam Comp")
+                .setCompVAT("32432432");
+
+        userRepository.save(user);
+    }
+
+
+
 
     public List<UserEntity> findAllNewUsers() {
         return userRepository.findByUserRolesEmpty();
