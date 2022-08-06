@@ -8,6 +8,8 @@ import com.softuni.forwardingApp.models.view.UserViewModel;
 import com.softuni.forwardingApp.models.view.UserViewModelToSetRoles;
 import com.softuni.forwardingApp.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -163,10 +165,10 @@ public class UserService {
         userRepository.save(userSetRolesCompany);
     }
 
-    public List<UserViewModel> findAllUserViewModels() {
-        return userRepository.findAll().
-                stream().
-                map(u -> modelMapper.map(u, UserViewModel.class))
-                .collect(Collectors.toList());
+    public Page<UserViewModel> findAllUserViewModels(Pageable pageable) {
+        return userRepository.findAll(pageable).
+//                stream().
+                map(u -> modelMapper.map(u, UserViewModel.class));
+//                .collect(Collectors.toList());
     }
 }

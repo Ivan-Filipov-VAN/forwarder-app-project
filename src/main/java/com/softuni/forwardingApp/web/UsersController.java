@@ -8,6 +8,10 @@ import com.softuni.forwardingApp.models.view.UserViewModelToSetRoles;
 import com.softuni.forwardingApp.service.CompanyService;
 import com.softuni.forwardingApp.service.RoleService;
 import com.softuni.forwardingApp.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,9 +70,15 @@ public class UsersController {
     }
 
     @GetMapping("/all-users")
-    public String viewAllUsers(Model model) {
-        List<UserViewModel> allUsers = userService
-                .findAllUserViewModels();
+    public String viewAllUsers(Model model,
+                               @PageableDefault(
+                                       page = 0,
+                                       size = 15,
+                                       sort = "id",
+                                       direction = Sort.Direction.DESC
+                               ) Pageable pageable) {
+        Page<UserViewModel> allUsers = userService
+                .findAllUserViewModels(pageable);
 
         model.addAttribute("allUsers", allUsers);
 

@@ -9,12 +9,10 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container padding-90">
-    <h2 class="text-center text-white">New Users</h2>
+    <h2 class="text-center text-secondary">New Users</h2>
 </div>
 
-<!--<div class="container">-->
-<!--<table class="table table-hover table-dark">-->
-<table class="table table-hover table-dark">
+<table class="table table-hover">
     <thead>
     <tr class="table-primary">
         <th>ID</th>
@@ -40,10 +38,10 @@
         <td th:text="${u.userRoles}">userRoles</td>
         <td>
             <span th:if="${u.company == null}">
-            <a th:href="@{'/companies/edit/' + ${u.id}}">NO</a>
+            NO
             </span>
             <span th:unless="${u.company == null}">
-            <a th:href="@{'/companies/edit/' + ${u.id}}">YES</a>
+            YES
             </span>
         </td>
         <td><a th:href="@{'/users/editAddRoleCompany/' + ${u.id}}">Edit</a></td>
@@ -53,7 +51,6 @@
     </tr>
     </tbody>
 </table>
-<!--</div>-->
 
 <div>
     <footer th:replace="fragments/footer::footer"></footer>

@@ -3,7 +3,6 @@ package com.softuni.forwardingApp.web;
 import com.softuni.forwardingApp.models.dto.DealAddDto;
 import com.softuni.forwardingApp.models.dto.DealUpdateDto;
 import com.softuni.forwardingApp.models.entity.CompanyEntity;
-import com.softuni.forwardingApp.models.entity.DealEntity;
 import com.softuni.forwardingApp.models.entity.UserEntity;
 import com.softuni.forwardingApp.models.user.CurrentUserDetails;
 import com.softuni.forwardingApp.models.view.AgentViewIdName;
@@ -14,6 +13,7 @@ import com.softuni.forwardingApp.service.DealService;
 import com.softuni.forwardingApp.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -76,22 +76,13 @@ public class DealController {
     }
 
 
-//    //TODO
-//    @GetMapping("/all-deals")
-//    private String viewAllDeals(Model model) {
-//
-//        List<DealViewModel> allDeals = dealService.
-//                findAllDealsViewModel();
-//
-//        model.addAttribute("allDeals", allDeals);
-//        return "view-all-deals";
-//    }
-
     @GetMapping("/all-deals")
     private String viewAllDeals(Model model,
                                 @PageableDefault(
                                         page = 0,
-                                        size = 3
+                                        size = 15,
+                                        sort = "id",
+                                        direction = Sort.Direction.DESC
                                 ) Pageable pageable) {
 
         Page<DealViewModel> allDeals = dealService.
@@ -120,7 +111,7 @@ public class DealController {
     private String viewAllDealsInTransit(Model model,
                                 @PageableDefault(
                                         page = 0,
-                                        size = 3
+                                        size = 15
                                 ) Pageable pageable) {
 
         Page<DealViewModel> allDeals = dealService.
@@ -130,11 +121,6 @@ public class DealController {
         return "view-all-deals-in-transit";
     }
 
-//    @GetMapping("/change-status/{id}")
-//    public DealUpdateDto changeStatus(@PathVariable("id") Long id) {
-//        DealUpdateDto dealUpdateDto = dealService.findById(id);
-//        return dealUpdateDto;
-//    }
 
     @GetMapping("/change-status-in-transit/{id}")
     public String confirmChangeStatusInTransit(
@@ -142,7 +128,7 @@ public class DealController {
             Model model,
             @PageableDefault(
                     page = 0,
-                    size = 3
+                    size = 15
             ) Pageable pageable
     ) {
         DealUpdateDto dealUpdateDto = dealService.findById(id);
@@ -162,7 +148,7 @@ public class DealController {
             Model model,
             @PageableDefault(
                     page = 0,
-                    size = 3
+                    size = 15
             ) Pageable pageable
             ) {
         DealUpdateDto dealUpdateDto = dealService.findById(id);
@@ -222,20 +208,6 @@ public class DealController {
         return "redirect:all-deals";
     }
 
-
-
-//    private String viewAllDeals(Model model,
-//                                @PageableDefault(
-//                                        page = 0,
-//                                        size = 3
-//                                ) Pageable pageable) {
-//
-//        Page<DealViewModel> allDeals = dealService.
-//                findAllDealsViewModel(pageable);
-//
-//        model.addAttribute("allDeals", allDeals);
-//        return "view-all-deals";
-
         @GetMapping("/customer-deals")
         private String viewCustomerDeals(
             Model model,
@@ -263,7 +235,9 @@ public class DealController {
             Model model,
             @PageableDefault(
                     page = 0,
-                    size = 10
+                    size = 10,
+                    sort = "id",
+                    direction = Sort.Direction.DESC
             )
             Pageable pageable,
             @AuthenticationPrincipal CurrentUserDetails userDetails) {
@@ -279,30 +253,6 @@ public class DealController {
 
         return "view-customer-all-deals";
     }
-
-
-//    before changes
-
-//    @GetMapping("/customer-deals")
-//    private String viewCustomerDeals(
-//            Model model,
-//            @AuthenticationPrincipal CurrentUserDetails userDetails) {
-//
-//        UserEntity user = userService.findById(userDetails.getId());
-//        if (user.getCompany() == null) {
-//            return "error-user-company-not-exist";
-//        }
-//        Long companyId = user.getCompany().getId();
-//
-////        List<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(companyId);
-//
-//        List<DealViewModel> customerDeals = dealService.findAllDealsViewModelByCompanyID(companyId);
-//
-//
-//        model.addAttribute("customerDeals", customerDeals);
-//
-//        return "view-customer-deals";
-//    }
 
     @ModelAttribute
     public DealAddDto dealAddDto() {

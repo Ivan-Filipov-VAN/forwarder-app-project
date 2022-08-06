@@ -9,21 +9,29 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container padding-90">
-    <h2 class="text-center text-white">All Companies</h2>
+    <h2 class="text-center text-secondary">All Companies</h2>
 </div>
 
-<!--<div class="container">-->
-    <table class="table table-hover table-dark">
+    <table id="myTable" class="table table-hover">
         <thead>
         <tr class="table-primary">
             <th>ID</th>
-            <th>Name</th>
+<!--            <th>Name</th>-->
+            <th>
+                <input class="form-control"
+                       style="200px"
+                       type="text"
+                       id="myInput"
+                       onkeyup="myFunction()"
+                       placeholder="Search for names..">
+            </th>
             <th>VAT</th>
             <th>Address</th>
             <th>MOL</th>
             <th>Edit</th>
         </tr>
         </thead>
+
         <tbody>
         <tr th:each="c: ${allCompanies}">
             <td th:text="${c.id}">User ID</td>
@@ -35,11 +43,12 @@
         </tr>
         </tbody>
     </table>
-<!--</div>-->
+
 
 <div>
     <footer th:replace="fragments/footer::footer"></footer>
 </div>
 
+<script src="/js/myCompanySearch.js"></script>
 </body>
 </html>

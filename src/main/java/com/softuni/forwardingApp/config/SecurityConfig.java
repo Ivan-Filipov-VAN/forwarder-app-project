@@ -30,7 +30,7 @@ public class SecurityConfig {
                         antMatchers("/", "/users/login", "/users/register").permitAll().
                         antMatchers("/companies/add-company").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/companies/all-company").hasRole(UserRoleEnum.EMPLOYEE.name()).
-//                        antMatchers("/companies/edit").hasRole(UserRoleEnum.EMPLOYEE.name()).
+                        antMatchers("/companies/edit/{id}").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/companies/save").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/agents/add-agent").hasRole(UserRoleEnum.EMPLOYEE.name()).
                         antMatchers("/agents/all-agent").hasRole(UserRoleEnum.EMPLOYEE.name()).

@@ -14,9 +14,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -396,26 +400,34 @@ public class UserServiceTest {
                 .setCompany(testCompany);
 
 
-        when(mockUserRepository.findAll())
-                .thenReturn(List.of(testFirstUser, testSecondUser));
+        when(mockUserRepository.findAll(Pageable.unpaged()))
+                .thenReturn(new PageImpl<>(List.of(testFirstUser, testSecondUser)));
 
         when(mockModelMapper.map(testFirstUser, UserViewModel.class)).
                 thenReturn(resultTestFirst);
         when(mockModelMapper.map(testSecondUser, UserViewModel.class)).
                 thenReturn(resultTestSecond);
 
-        List<UserViewModel> allUserViewModels = serviceToTest.findAllUserViewModels();
+        Page<UserViewModel> allUserViewModels = serviceToTest.findAllUserViewModels(Pageable.unpaged());
 
-        Assertions.assertEquals(2, allUserViewModels.size());
-        Assertions.assertEquals(testFirstUser.getEmail(), allUserViewModels.get(0).getEmail());
-        Assertions.assertEquals(testFirstUser.getFirstName(), allUserViewModels.get(0).getFirstName());
-        Assertions.assertEquals(testFirstUser.getLastName(), allUserViewModels.get(0).getLastName());
-        Assertions.assertEquals(testFirstUser.getUserRoles().size(), allUserViewModels.get(0).getUserRoles().size());
-        Assertions.assertEquals(testFirstUser.getCompany().getId(), allUserViewModels.get(0).getCompany().getId());
-        Assertions.assertEquals(testFirstUser.getPhoneNumber(), allUserViewModels.get(0).getPhoneNumber());
-        Assertions.assertEquals(testFirstUser.getId(), allUserViewModels.get(0).getId());
+        Iterator<UserViewModel> iterator = allUserViewModels.iterator();
 
-        Assertions.assertEquals(testSecondUser.getEmail(), allUserViewModels.get(1).getEmail());
+
+
+        UserViewModel viewModel = iterator.next();
+
+//        Assertions.assertEquals(2, allUserViewModels.size());
+        Assertions.assertEquals(testFirstUser.getEmail(), viewModel.getEmail());
+        Assertions.assertEquals(testFirstUser.getFirstName(), viewModel.getFirstName());
+        Assertions.assertEquals(testFirstUser.getLastName(), viewModel.getLastName());
+        Assertions.assertEquals(testFirstUser.getUserRoles().size(), viewModel.getUserRoles().size());
+        Assertions.assertEquals(testFirstUser.getCompany().getId(), viewModel.getCompany().getId());
+        Assertions.assertEquals(testFirstUser.getPhoneNumber(), viewModel.getPhoneNumber());
+        Assertions.assertEquals(testFirstUser.getId(), viewModel.getId());
+
+        UserViewModel viewModel2 = iterator.next();
+
+        Assertions.assertEquals(testSecondUser.getEmail(), viewModel2.getEmail());
 
     }
 
