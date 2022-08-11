@@ -3,6 +3,7 @@ package com.softuni.forwardingApp.repositories;
 import com.softuni.forwardingApp.models.entity.DealEntity;
 import com.softuni.forwardingApp.models.enums.AirTypeEnum;
 import com.softuni.forwardingApp.models.enums.ShipmentStatusEnum;
+import com.softuni.forwardingApp.models.view.DealViewModel;
 import com.softuni.forwardingApp.models.view.StatisticViewModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,13 +40,16 @@ public interface DealRepository extends JpaRepository<DealEntity, Long> {
     Page<DealEntity> findAllDealsInTransit(Pageable pageable, ShipmentStatusEnum status);
 
     @Query("SELECT d FROM DealEntity d JOIN d.company c WHERE c.id = ?1")
-    Page<DealEntity> findByEmployeeId(Pageable pageable, Long id);
+    Page<DealEntity> findByCompanyId(Pageable pageable, Long id);
 
     @Query("SELECT d FROM DealEntity d JOIN d.company c WHERE c.id = ?1 AND d.status !=?2")
-    Page<DealEntity> findByEmployeeIdInTransit(Pageable pageable, Long id, ShipmentStatusEnum status);
+    Page<DealEntity> findByCompanyIdInTransit(Pageable pageable, Long id, ShipmentStatusEnum status);
 
     Page<DealEntity> findByArchiveFalse(Pageable pageable);
 
     @Query("SELECT count(d) FROM DealEntity d WHERE d.type = ?1 AND d.date = ?2 ")
     Long getStatistic(AirTypeEnum type, LocalDate date);
+
+    @Query("SELECT d FROM DealEntity d JOIN d.company c WHERE d.date >=?1 AND c.id = ?2")
+    List<DealEntity> findByDateAfter(LocalDate localDate, Long id);
 }

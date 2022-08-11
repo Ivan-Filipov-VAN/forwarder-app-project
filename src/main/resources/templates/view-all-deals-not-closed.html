@@ -50,15 +50,14 @@
         <td th:text="${d.chargeableWeight}">pieces</td>
         <td th:text="${d.country}">pieces</td>
         <td th:text="${d.airport}">pieces</td>
-        <!--        <td><a th:href="@{'/deals/change-status/' + ${d.id}}" th:text="${d.status}"></a></td>-->
         <td>
             <span th:if="${d.status == T(com.softuni.forwardingApp.models.enums.ShipmentStatusEnum).DONE}">
                 <span class="text-success" th:text="${d.status}"></span>
             </span>
             <span th:unless="${d.status == T(com.softuni.forwardingApp.models.enums.ShipmentStatusEnum).DONE}">
-                <a th:href="@{'/deals/change-status/' + ${d.id}}" th:text="${d.status}"></a>
+<!--                <a th:href="@{'/deals/change-status/' + ${d.id}}" th:text="${d.status}"></a>-->
+                <span class="text-danger" th:text="${d.status}"></span>
             </span>
-
         </td>
         <td><a th:href="@{'/deals/edit/' + ${d.id}}">Edit</a></td>
     </tr>

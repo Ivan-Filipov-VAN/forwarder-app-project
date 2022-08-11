@@ -148,7 +148,9 @@ public class DealController {
             Model model,
             @PageableDefault(
                     page = 0,
-                    size = 15
+                    size = 15,
+                    sort = "id",
+                    direction = Sort.Direction.DESC
             ) Pageable pageable
             ) {
         DealUpdateDto dealUpdateDto = dealService.findById(id);

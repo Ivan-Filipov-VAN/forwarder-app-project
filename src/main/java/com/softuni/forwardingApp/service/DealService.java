@@ -108,7 +108,7 @@ public class DealService {
     }
 
     public Page<DealViewModel> findAllDealsViewModelByCompanyID(Pageable pageable, Long id) {
-        return dealRepository.findByEmployeeId(pageable, id)
+        return dealRepository.findByCompanyId(pageable, id)
                     .map(d -> {
                     DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
                     dealViewModel.setCompany(d.getCompany().getName());
@@ -117,7 +117,7 @@ public class DealService {
     }
 
     public Page<DealViewModel> findAllDealsViewModelByCompanyIDInTransit(Pageable pageable, Long id) {
-        return dealRepository.findByEmployeeIdInTransit(pageable, id, DELIVERED_STATUS)
+        return dealRepository.findByCompanyIdInTransit(pageable, id, DELIVERED_STATUS)
                 .map(d -> {
                     DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
                     dealViewModel.setCompany(d.getCompany().getName());
@@ -244,5 +244,23 @@ public class DealService {
                 .setArchive(false);
 
         dealRepository.save(fourth);
+    }
+
+    public List<DealViewModel> findAllCustomerDealsLast30Days(Long id) {
+        LocalDate localDate = LocalDate.now().minusDays(30);
+        return dealRepository.findByDateAfter(localDate, id)
+                .stream()
+                .map(d -> {
+                    DealViewModel dealViewModel = dealMapper.dealEntityToDealViewModel(d);
+                    dealViewModel.setCompany(d.getCompany().getName());
+                    dealViewModel.setEmployee(d.getEmployee().getEmail());
+                    if (d.getAgent() != null) {
+                        dealViewModel.setAgent(d.getAgent().getName());
+                    } else {
+                        dealViewModel.setAgent(null);
+                    }
+                    return dealViewModel;
+                })
+                .collect(Collectors.toList());
     }
 }

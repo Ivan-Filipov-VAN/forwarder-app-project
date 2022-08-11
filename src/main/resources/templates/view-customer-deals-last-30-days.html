@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container padding-90">
+    <h4 class="text-center text-secondary">DEALS LAST 30 DAYS</h4>
+</div>
+
+<button id="loadDeals">DEALS LAST 30 DAYS</button>
+
+<table class="table table-striped">
+    <thead>
+    <tr class="table-primary">
+        <!--        <th>ID</th>-->
+        <th>TYPE</th>
+        <th>Date</th>
+        <th>MAWB</th>
+        <th>HAWB</th>
+        <th>Company</th>
+        <!--        <th>Agent</th>-->
+        <!--        <th>Employee</th>-->
+        <th>PCS</th>
+        <th>Act. Weight</th>
+        <th>Vol. Weight</th>
+        <th>Country</th>
+        <th>Airport</th>
+        <!--        <th>EDIT</th>-->
+    </tr>
+    </thead>
+</table>
+
+
+
+<div>
+    <footer th:replace="fragments/footer::footer"></footer>
+</div>
+
+</body>
+</html>

@@ -11,14 +11,6 @@ body {
   padding-right: 100px;
 }
 
-/*.container, .container-fluid {
-    padding-top: 90px;
-}*/
-
-    /*.padding-90 {
-        padding-top: 90px;
-    }*/
-
     div.container.padding-90 {
     padding-top: 90px;
     }

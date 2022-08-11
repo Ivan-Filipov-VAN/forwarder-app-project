@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/head::head"></head>
 
 
 <body>
 
 <div th:replace="fragments/navbar :: navbar"></div>
-
-<!--<div class="container">-->
-<!--    <h2 class="text-center text-white">Welcome to home page</h2>-->
-<!--</div>-->
 
 <div class="marge-50">
 <div id="myCarousel" class="carousel slide
@@ -47,7 +44,6 @@
                 <h3>5Ex Company commits</h3>
                 <h3>to halving their CO2 emissions</h3>
                 <h3>in global partnerships</h3>
-<!--                <p>random text</p>-->
                 <a th:href="@{/users/register}" href="#" class="btn btn-lg btn-primary">
                     Sign up today
                 </a>
@@ -65,7 +61,6 @@
                     Sign up today
                 </a>
             </div>
-
         </div>
     </div>
     <a href="#myCarousel"
@@ -82,6 +77,31 @@
 </div>
 </div>
 
+<div sec:authorize="hasRole('CUSTOMER')") class="container-fluid marge-50">
+    <div class="col-md-12 text-center">
+        <button id="loadDeals" class="btn btn-primary btn-lg shadow-sm">Deals Last 30 Days</button>
+        <div class="py-1">
+        <table class="table table-striped">
+            <thead>
+            <tr class="table-primary">
+                <th>TYPE</th>
+                <th>Date</th>
+                <th>MAWB</th>
+                <th>HAWB</th>
+                <th>Company</th>
+                <th>PCS</th>
+                <th>Act. Weight</th>
+                <th>Vol. Weight</th>
+                <th>Country</th>
+                <th>Airport</th>
+            </tr>
+            </thead>
+            <tbody id="deals-container"></tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
 <div class="container text-center py-5">
     <div class="row row-cols-1 row-cols-md-3">
         <div class="col mb-4">
@@ -91,7 +111,6 @@
 
                 </div>
                 <div class="card-body">
-
 
                     <h1 class="my-0 font-weight-normal">AIR SERVICE
                     </h1>
@@ -148,9 +167,7 @@
                 </div>
                 <div class="card-body">
 
-
                     <h1 class="my-0 font-weight-normal">Headquarters
-<!--                        <small class="text-muted">/mo</small>-->
                     </h1>
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>Sofia, Bulgaria</li>
@@ -170,13 +187,9 @@
         </div>
 
     </div>
-
-
 </div>
-<!--<script src="/css/bootstrap.bundle.min.js"-->
-<!--        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"-->
-<!--        crossorigin="anonymous"></script>-->
 
+<script src="/js/dealRest.js"></script>
 <div>
     <footer th:replace="fragments/footer::footer"></footer>
 </div>
